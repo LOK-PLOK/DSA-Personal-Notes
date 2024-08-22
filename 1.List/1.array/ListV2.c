@@ -114,11 +114,11 @@ void insertPos(List A,Elements elem,int pos){
 void deleteStud(List A,int ID){
      int i, j;
     for (i = 0; i < A->count && A->stud[i].id != ID; i++) {}
-    if (i != A->count) {  // Found the student with the matching ID
+    if (i != A->count) { 
         for (j = i + 1; j < A->count; j++) {
             A->stud[j - 1] = A->stud[j];
         }
-        A->count--;  // Decrement the count after deletion
+        A->count--; 
     } else {
         printf("\n\nStudent not in List\n\n");
     }

@@ -27,6 +27,7 @@ void initList(List* A);
 void clean(List* A);
 void insertEnd(List* A,Elements elem);
 void insertFirst(List* A,Elements elem);
+void deleteStud(List* A,int ID);
 void displayList(List A);
 
 int main(){
@@ -47,6 +48,9 @@ int main(){
     insertFirst(&L,examp5);
     displayList(L);
 
+    printf("\n\n=====================================================\n\n");
+    deleteStud(&L,23100244);
+    displayList(L);
 
     clean(&L);
     return 0;
@@ -70,7 +74,31 @@ void insertEnd(List* A,Elements elem){
         printf("Max capacity reached: %d/%d\n",A->count,A->arrSize);
     }
 }
-void insertFirst(List* A,Elements elem);
+void insertFirst(List* A,Elements elem){
+    if(A->count < A->arrSize){
+        int i;
+        for(i = A->count; i>0;i--){
+            A->stud[i] = A->stud[i-1];
+        }
+        A->stud[0] = elem;
+        A->count++;
+    }else{
+        printf("Max capacity reached: %d/%d\n",A->count,MAX);
+    }
+}
+
+void deleteStud(List* A,int ID){
+    int i,j;
+    for(i=0;i<A->count && A->stud[i].id != ID;i++){}
+    if(i != A->count){
+        for(j = i+1; j<A->count; j++){
+            A->stud[j-1] = A->stud[j]
+        }
+        A->count--;
+    }else{
+        printf("\n\nStudent not in List\n\n");
+    }
+}
 
 void displayList(List A){
     int i;
