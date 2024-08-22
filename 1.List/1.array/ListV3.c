@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define MAX 10
+#define MAX 5
 
 typedef struct{
     char fName[24];
@@ -84,35 +84,55 @@ void initList(List* A){
 }
 
 void insertEnd(List* A,Elements elem){
-    if(A->count < A->arrSize){
-        A->stud[A->count++] = elem;
-    }else{
-        printf("Max capacity reached: %d/%d\n",A->count,A->arrSize);
+    if(A->count >= A->arrSize){
+        A->arrSize *= 2;
+        A->stud = (Elements*)realloc(A->stud,sizeof(Elements)*A->arrSize);
+        if(A->stud == NULL){
+            printf("ERROR: Memory allocation failed\n");
+            exit(1);
+        }
     }
+
+    A->stud[A->count++] = elem;
 }
 void insertFirst(List* A,Elements elem){
-    if(A->count < A->arrSize){
-        int i;
-        for(i = A->count; i>0;i--){
-            A->stud[i] = A->stud[i-1];
+    if(A->count >= A->arrSize){
+        A->arrSize *= 2;
+        A->stud = (Elements*)realloc(A->stud,sizeof(Elements)*A->arrSize);
+        if(A->stud == NULL){
+            printf("ERROR: Memory allocation failed\n");
+            exit(1);
         }
-        A->stud[0] = elem;
-        A->count++;
-    }else{
-        printf("Max capacity reached: %d/%d\n",A->count,MAX);
+        
     }
+
+    int i;
+    for(i = A->count; i>0;i--){
+        A->stud[i] = A->stud[i-1];
+    }
+    A->stud[0] = elem;
+    A->count++;
 }
 
 void insertPos(List* A,Elements elem,int pos){
-    if(A->count < A->arrSize && pos <= A->count && pos >= 0){
+    if(pos <= A->count && pos >= 0){
+        if(A->count >= A->arrSize){
+            A->arrSize *= 2;
+            A->stud =  (Elements*)realloc(A->stud,sizeof(Elements)*A->arrSize);
+            if(A->stud == NULL){
+                printf("ERROR: Memory allocation failed\n");
+                exit(1);
+            }
+        }
+
         int i;
-        for(i = A->count; i>pos;i--){
-            A->stud[i] = A->stud[i-1];
+        for(i=A->count;i>pos;i--){
+            A->stud[i] = A->stud[i-1]; 
         }
         A->stud[pos] = elem;
         A->count++;
     }else{
-        printf("\n\nERROR: Invalid position or list is full.\n\n");
+        printf("ERROR: Invalid position\n");
     }
 }
 
