@@ -38,6 +38,8 @@ void deleteAllOccur(List* A,const char course[]);
 // selectionSort()
 // insertionSort()
 
+// NOTE: There are many redundancy in this code that can be simplified but im lazy haha
+
 int main(){
     List L;
     initList(&L);
@@ -145,6 +147,8 @@ void deleteAllOccur(List* A,const char course[]){
                 x++;
             }
         }
+    }else{
+        printf("The List is empty.\n");
     }
     
 }

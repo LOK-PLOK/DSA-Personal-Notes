@@ -38,6 +38,8 @@ void displayList(Node A);
 // selectionSort()
 // insertionSort()
 
+// NOTE: There are many redundancy in this code that can be simplified but im lazy haha
+
 int main(){
     List L = NULL;
     initList(&L);
@@ -149,6 +151,8 @@ void deleteAllOccur(List A,const char course[]){
                 i++;
             }
         }
+    }else{
+        printf("The List is empty.\n");
     }
 }
 
