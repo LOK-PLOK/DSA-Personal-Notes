@@ -27,8 +27,18 @@ void initList(List* A);
 void clean(List* A);
 void insertEnd(List* A,Elements elem);
 void insertFirst(List* A,Elements elem);
+void insertPos(List* A,Elements elem,int pos);
 void deleteStud(List* A,int ID);
+void deletePos(List* A,int pos);
+void deleteAllOccur(List* A,const char course[]);
 void displayList(List A);
+
+// Other operations that Im to lazy to do yet
+// InsertSorted()
+// InsertUniqueElem()
+// bubbleSort()
+// selectionSort()
+// insertionSort()
 
 int main(){
     List L;
@@ -46,10 +56,16 @@ int main(){
     insertEnd(&L,examp3);
     insertEnd(&L,examp4);
     insertFirst(&L,examp5);
+    insertPos(&L,examp6,2);
     displayList(L);
 
     printf("\n\n=====================================================\n\n");
     deleteStud(&L,23100244);
+    deletePos(&L,2);
+    displayList(L);
+
+    printf("\n\n=====================================================\n\n");
+    deleteAllOccur(&L,"BSCS");
     displayList(L);
 
     clean(&L);
@@ -87,16 +103,57 @@ void insertFirst(List* A,Elements elem){
     }
 }
 
+void insertPos(List* A,Elements elem,int pos){
+    if(A->count < A->arrSize && pos <= A->count && pos >= 0){
+        int i;
+        for(i = A->count; i>pos;i--){
+            A->stud[i] = A->stud[i-1];
+        }
+        A->stud[pos] = elem;
+        A->count++;
+    }else{
+        printf("\n\nERROR: Invalid position or list is full.\n\n");
+    }
+}
+
 void deleteStud(List* A,int ID){
     int i,j;
     for(i=0;i<A->count && A->stud[i].id != ID;i++){}
     if(i != A->count){
         for(j = i+1; j<A->count; j++){
-            A->stud[j-1] = A->stud[j]
+            A->stud[j-1] = A->stud[j];
         }
         A->count--;
     }else{
         printf("\n\nStudent not in List\n\n");
+    }
+}
+
+void deletePos(List* A,int pos){
+    if(pos <= A->count && pos >= 0){
+        int i;
+        for(i=pos+1;i<A->count;i++){
+            A->stud[i-1] = A->stud[i];
+        }
+        A->count--;
+    }else{
+        printf("\n\nStudent not in List\n\n");
+    }
+}
+
+void deleteAllOccur(List* A,const char course[]){
+    if(A->count != 0){
+        int i,j;
+        for(i=0; i<A->count;){
+            if(strcmp(A->stud[i].course,course) == 0){
+                for(j=i+1; j<A->count;j++){
+                    A->stud[j-1] = A->stud[j];
+                }
+                A->count--;
+            }else{
+                i++;
+            }
+        }
     }
 }
 

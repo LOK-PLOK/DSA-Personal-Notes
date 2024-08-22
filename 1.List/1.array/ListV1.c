@@ -121,7 +121,7 @@ void deleteStud(List* A,int ID){
 }
 
 void deleteAtPos(List* A, int pos){
-    if(pos < A->count && pos >= 0){
+    if(pos < A->count && pos >= 0 && A->count != 0){
         int x;
         for(x= pos+1;x<A->count;x++){
             A->stud[x-1] = A->stud[x];
@@ -133,17 +133,20 @@ void deleteAtPos(List* A, int pos){
 }
 
 void deleteAllOccur(List* A,const char course[]){
-    int x,j;
-    for(x = 0; x<A->count;){
-        if(strcmp(A->stud[x].course,course) == 0){
-            for(j=x+1; j<A->count;j++){
-                A->stud[j-1] = A->stud[j];
+    if(A->count != 0){
+        int x,j;
+        for(x = 0; x<A->count;){
+            if(strcmp(A->stud[x].course,course) == 0){
+                for(j=x+1; j<A->count;j++){
+                    A->stud[j-1] = A->stud[j];
+                }
+                A->count--;
+            }else{
+                x++;
             }
-            A->count--;
-        }else{
-            x++;
         }
     }
+    
 }
 
 void displayList(List A){
