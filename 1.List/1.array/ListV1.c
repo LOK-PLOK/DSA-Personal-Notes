@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 #define MAX 10
 
 typedef struct{
@@ -58,10 +57,12 @@ int main(){
     insertPos(&L,examp6,2);
     displayList(L);
 
+    printf("\n\n=====================================================\n\n");
     deleteStud(&L, 23100244);
     deleteAtPos(&L, 2);
     displayList(L);
 
+    printf("\n\n=====================================================\n\n");
     deleteAllOccur(&L,"BSCS");
     displayList(L);
 
