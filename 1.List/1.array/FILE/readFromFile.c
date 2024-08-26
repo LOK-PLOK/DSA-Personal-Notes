@@ -23,14 +23,13 @@ typedef struct{
     int count;
 }List;
 
-FILE* checkFile();
 void saveToFile(List A, FILE** fptr);
 void displayList(List A);
 
 List getList(FILE* fptr);
 
 int main(){
-    FILE* fptr = checkFile();
+    FILE* fptr = fopen("AdtList.dat","rb+");
     List L = getList(fptr);
 
     saveToFile(L,&fptr);
@@ -53,19 +52,6 @@ List getList(FILE* fptr){
     }
 
     return A;
-}
-
-FILE* checkFile(){
-    FILE* fptr;
-
-    if((fptr = fopen("AdtList.dat","rb+")) == NULL){
-        fptr = fopen("AdtList.dat","wb+");
-    }else{
-        fclose(fptr);
-        fptr = fopen("AdtList.dat","rb+");
-    }
-
-    return fptr;
 }
 
 void saveToFile(List A, FILE** fptr){

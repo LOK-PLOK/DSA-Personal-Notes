@@ -23,7 +23,7 @@ typedef struct{
     int count;
 }List;
 
-FILE* checkFile();
+
 void saveToFile(List A, FILE** fptr);
 void displayList(List A);
 
@@ -36,24 +36,11 @@ int main(){
     Elements examp4 = {{"Paul Winston",'T',"Ancajas"},23102628,"BSIS",2};
     Elements examp1 = {{"Katsu",'A',"Ito"},20104115,"BSIS",2};
     List L = {{examp1,examp2,examp3,examp4,examp5,examp6},6};
-    FILE* fptr = checkFile();
+    FILE* fptr = fopen("AdtList.dat","rb+");
 
     saveToFile(L,&fptr);
     displayList(L);
 
-}
-
-FILE* checkFile(){
-    FILE* fptr;
-
-    if((fptr = fopen("AdtList.dat","rb+")) == NULL){
-        fptr = fopen("AdtList.dat","wb+");
-    }else{
-        fclose(fptr);
-        fptr = fopen("AdtList.dat","rb+");
-    }
-
-    return fptr;
 }
 
 void saveToFile(List A, FILE** fptr){
