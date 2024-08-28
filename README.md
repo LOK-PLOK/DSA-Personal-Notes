@@ -44,9 +44,16 @@
 - Operations: Enqueue, Dequeue, Front, isEmpty, isFull and initialize
 - Implementations
 	1.  **Array Implementation:**
+		- Circular Array
 	2. **Linked List Implementation:**
+		- front and rear structure datatype
+		- Doubly linked list
 
 ### IMPORTANT
 - Stacks and Queue data structures cannot be traversed based from the given definitions
+- Stacks: in printing the elements, starts from the top(last inserted) element and transfer the elements to another stack
+- Queue: in printing the elements, starts from the front(first inserted) element (not sure)
 
-# NOTES TO BE CONTINUED
+### Todo:
+Solve Stack and Queue related LeetCode problems
+
