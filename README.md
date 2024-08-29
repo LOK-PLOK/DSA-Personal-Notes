@@ -45,12 +45,15 @@
 - Implementations
 	1.  **Array Implementation:**
 		- Circular Array
+			- if empty, front is ahead of rear by 1: (rear+1) % SIZE == front
+  			- if full, front is ahead of rear by 2: (rear+2) % SIZE == front
 	2. **Linked List Implementation:**
-		- front and rear structure datatype
+		- front and rear interger variables in a user defined structure datatype
 		- Doubly linked list
 
 ### IMPORTANT
 - Stacks and Queue data structures cannot be traversed based from the given definitions
+### for just displaying the elements:
 - Stacks: in printing the elements, starts from the top(last inserted) element and transfer the elements to another stack
 - Queue: in printing the elements, starts from the front(first inserted) element (not sure)
 
