@@ -13,7 +13,8 @@
 ## Mentioned types of Data Structure Implementation 
 - Array
 - Linked List
-- Cursor-based (need to learn more)
+- Cursor-based
+  - it is like linked list but array implementation and where requesting memory aswell as freeing memory is a function to call.
 
 ### ADT List
 - a data structure that represents an ordered collection of elements.
