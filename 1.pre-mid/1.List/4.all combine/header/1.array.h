@@ -126,7 +126,10 @@ void deleteAllOccur(List* L, char elem){
     }
 }
 
-// boolean isEqualList(List SET1,List SET2){
-    
-// }
+boolean isEqualList(List SET1,List SET2){
+    int i;
+    for(i = 0; i<SET1.count && SET1.elem[i] == SET2.elem[i]; i++){}
+
+    return(i == SET1.count && SET1.count == SET2.count)? TRUE:FALSE;
+}
 #endif

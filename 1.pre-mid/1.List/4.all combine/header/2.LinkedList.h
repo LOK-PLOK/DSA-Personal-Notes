@@ -119,4 +119,12 @@ void deleteAllOccur(List* A, char elem){
     }
 }
 
+boolean isEqualList(List SET1,List SET2){
+   List trav1,trav2;
+   
+   for(trav1 = SET1,trav2 = SET2; trav1 != NULL && trav2 != NULL && trav1->elem == trav2->elem; trav1 = trav1->next, trav2 = trav2->next){}
+
+   return(trav1 == NULL && trav2 == NULL)? TRUE:FALSE;
+}
+
 #endif

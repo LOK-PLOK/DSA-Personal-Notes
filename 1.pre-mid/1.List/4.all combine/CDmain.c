@@ -58,26 +58,39 @@ int main(){
 
     clean(&test, &VH);
 
-    // printf("\nAssignment Area\n");
-    // printf("\ninsertSorted is done above\n");
-    // List SET1;
-    // List SET2;
-    // initList(&SET1);
-    // initList(&SET2);
-    // insertLast(&SET1, 'A');
-    // insertLast(&SET1, 'B');
-    // insertLast(&SET1, 'C');
-    // insertLast(&SET1, 'D');
-    // insertLast(&SET2, 'A');
-    // insertLast(&SET2, 'B');
-    // insertLast(&SET2, 'C');
-    // insertLast(&SET2, 'D');
+    printf("\nAssignment Area\n");
+    printf("\ninsertSorted is done above\n");
+    List SET1;
+    List SET2;
+    List SET3;
+    initList(&SET1);
+    initList(&SET2);
+    initList(&SET3);
+    insertLast(&SET1,&VH, 'A');
+    insertLast(&SET1,&VH, 'B');
+    insertLast(&SET1,&VH, 'C');
+    insertLast(&SET1,&VH, 'D');
+    insertLast(&SET2,&VH, 'A');
+    insertLast(&SET2,&VH, 'B');
+    insertLast(&SET2,&VH, 'C');
+    insertLast(&SET2,&VH, 'D');
+    insertLast(&SET3,&VH, 'D');
+    insertLast(&SET3,&VH, 'C');
+    insertLast(&SET3,&VH, 'B');
+    insertLast(&SET3,&VH, 'A');
 
-    // printf("\nisEqualList(): sorted version \n");
-    // display(SET1);
-    // display(SET2);
+    printf("\nisEqualList(): sorted version \n");
+    display(SET1,VH);
+    display(SET2,VH);
+    display(SET3,VH);
 
-    // boolean equal = isEqualList(SET1,SET2);
+    boolean equal1 = isEqualList(SET1,SET2,VH);
+    boolean equal2 = isEqualList(SET1,SET3,VH);
 
+    printf("\n");
+    printf("SET1 is %s to SET2\n", (equal1 == TRUE)? "Equal":"Not Equal");
+    printf("SET1 is %s to SET3\n", (equal2 == TRUE)? "Equal":"Not Equal");
+
+    displayAvail(VH);
     return 0;
 }

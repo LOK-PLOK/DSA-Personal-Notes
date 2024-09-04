@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 10
+#define MAX 20
 
 typedef struct{
     char elem;
@@ -145,6 +145,22 @@ void deleteAllOccur(List* A, VirtualHeap* VH, char elem){
             trav = &(VH->Nodes[*trav].next);
         }
     }
+}
+
+boolean isEqualList(List SET1, List SET2, VirtualHeap VH){
+    int i,j;
+    for(i = SET1,j=SET2; i!= -1 && j != -1 && VH.Nodes[i].elem == VH.Nodes[j].elem; i = VH.Nodes[i].next,j = VH.Nodes[j].next){}
+    return (i == -1 && j == -1)? TRUE:FALSE;
+}
+
+void displayAvail(VirtualHeap VH){
+    int i = VH.avail;
+    while(i != -1){
+        printf("%d ",VH.avail);
+        VH.avail = VH.Nodes[i].next;
+        i = VH.avail;
+    }
+    printf("\n");
 }
 
 #endif

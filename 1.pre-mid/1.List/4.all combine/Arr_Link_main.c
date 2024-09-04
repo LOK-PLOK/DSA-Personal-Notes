@@ -4,8 +4,8 @@
  * Important: cursor based is different .c file
  */
 
-// #include "./header/array.h"
-#include "./header/LinkedList.h"
+#include "./header/1.array.h"
+// #include "./header/2.LinkedList.h"
 
 int main(){
     system("cls");
@@ -66,26 +66,39 @@ int main(){
     clean(&test);
 
     
-    // printf("\nAssignment Area\n");
-    // printf("\ninsertSorted is done above\n");
-    // List SET1;
-    // List SET2;
-    // initList(&SET1);
-    // initList(&SET2);
-    // insertLast(&SET1, 'A');
-    // insertLast(&SET1, 'B');
-    // insertLast(&SET1, 'C');
-    // insertLast(&SET1, 'D');
-    // insertLast(&SET2, 'A');
-    // insertLast(&SET2, 'B');
-    // insertLast(&SET2, 'C');
-    // insertLast(&SET2, 'D');
+    printf("\nAssignment Area\n");
+    printf("\ninsertSorted is done above\n");
+    List SET1;
+    List SET2;
+    List SET3;
+    initList(&SET1);
+    initList(&SET2);
+    initList(&SET3);
+    insertLast(&SET1, 'A');
+    insertLast(&SET1, 'B');
+    insertLast(&SET1, 'C');
+    insertLast(&SET1, 'D');
+    insertLast(&SET2, 'A');
+    insertLast(&SET2, 'B');
+    insertLast(&SET2, 'C');
+    insertLast(&SET2, 'D');
+    insertLast(&SET3, 'D');
+    insertLast(&SET3, 'C');
+    insertLast(&SET3, 'B');
+    insertLast(&SET3, 'A');
 
-    // printf("\nisEqualList(): sorted version \n");
-    // display(SET1);
-    // display(SET2);
+    printf("\nisEqualList(): sorted version \n");
+    display(SET1);
+    display(SET2);
+    display(SET3);
 
-    // boolean equal = isEqualList(SET1,SET2);
+
+    boolean equal1 = isEqualList(SET1,SET2);
+    boolean equal2 = isEqualList(SET1,SET3);
+
+    printf("\n");
+    printf("SET1 is %s to SET2\n", (equal1 == TRUE)? "Equal":"Not Equal");
+    printf("SET1 is %s to SET3\n", (equal2 == TRUE)? "Equal":"Not Equal");
     
     return 0;
 }
