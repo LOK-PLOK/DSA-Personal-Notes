@@ -4,7 +4,8 @@
  * Important: cursor based is different .c file
  */
 
-#include "./header/array.h"
+// #include "./header/array.h"
+#include "./header/LinkedList.h"
 
 int main(){
     system("cls");
