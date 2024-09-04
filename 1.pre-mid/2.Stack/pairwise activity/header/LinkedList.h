@@ -79,7 +79,6 @@ void display(Stack A) {
     }
 }
 
-// Clean (free) the stack
 void clean(Stack* A) {
     Stack temp;
     while (*A != NULL) {
