@@ -1,28 +1,41 @@
-// #include "./header/array.h"
-#include "./header/LinkedList.h"
+#include "./header/array.h"
+// #include "./header/LinkedList.h"
 int main(){
     Stack S;
     
-    system("cls");
+    system("cls");  //<-- Windows
+    // system("clear");  //<-- Linux
     
-    init(&S);
+    printf("\ninitStack(): \n");
+    initStack(&S);
     display(S);
 
-    push(&S, 1);
+    printf("\npush(A): \n");
+    push(&S, 'A');
     display(S);
 
-    push(&S, 2);
-    push(&S, 3);
+    printf("\npush(B,C,D,E): \n");
+    push(&S, 'B');
+    push(&S, 'C');
+    push(&S, 'D');
+    push(&S, 'E');
     display(S);
 
 
     int topElem = top(S);
-    printf("\nTop: %d\n", topElem);
+    printf("\nTop: %c\n", topElem);
 
+    printf("\npop(): \n");
     pop(&S);
     display(S);
 
+    printf("\ninsertBottom(Z): \n");
+    insertBottom(&S,'Z');
+    display(S);
 
+    printf("\nclean(): \n");
+    clean(&S);
+    display(S);
     return 0;
 }
 

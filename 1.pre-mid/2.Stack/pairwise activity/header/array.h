@@ -3,27 +3,34 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 5
+#define MAX 10
 
 typedef struct {
-    int data[MAX];
+    char elem[MAX];
     int top;
 }Stack;
 
-void init(Stack* A){
+void initStack(Stack* A){
     A->top = MAX;
 }
 
-void push(Stack* A, int elem){
-    if(A->top != 0){
-        A->data[--A->top] = elem;
+int isEmpty(Stack A){
+    return(A.top == MAX)? 1:0;
+}
+
+int isFull(Stack A){
+    return (A.top == 0)? 1:0;
+}
+void push(Stack* A, char elem){
+    if(!isFull(*A)){
+        A->elem[--A->top] = elem;
     }else{
         printf("Stack is Full\n");
     }
 }
 
 void pop(Stack* A){
-    if(A->top != MAX){
+    if(!isEmpty(*A)){
         A->top++;
     }else{
         printf("Stack is Empty\n");        
@@ -32,18 +39,47 @@ void pop(Stack* A){
 
 
 int top(Stack A){
-    return (A.top != MAX)? A.data[A.top]:-1; 
+    return (A.top != MAX)? A.elem[A.top]:-1; 
+}
+
+
+void insertBottom(Stack* A, char elem) {
+    Stack temp;
+    initStack(&temp);  
+
+    char topElem;
+    while(A->top != MAX){
+        topElem = top(*A);
+        pop(A);
+        push(&temp, topElem);
+    }
+
+    push(&temp, elem);
+
+    while(temp.top != MAX){
+        topElem = top(temp);
+        pop(&temp);
+        push(A, topElem);
+    }
 }
 
 void display(Stack A){
-    printf("\nStack: ");
+    Stack temp;
+    printf("Stack: ");
     if(A.top != MAX){
-        int i;
-        for(i=A.top; i<MAX; i++){
-            printf("%d ",A.data[i]);
+        for(temp = A; temp.top != MAX;){
+            printf("%c ",temp.elem[temp.top]);
+            pop(&temp); 
         }
+        printf("\n");
     }else{
         printf("Empty\n");
+    }
+}
+
+void clean(Stack* A){
+    while(A->top != MAX){
+        pop(A);
     }
 }
 
