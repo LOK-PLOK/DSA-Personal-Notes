@@ -13,8 +13,8 @@ typedef struct {
     char elem[MAX];
     int count;
 }List;
-
 typedef enum{TRUE,FALSE}boolean;
+
 /**
  * Functions to do:
  * insertFirst();
@@ -23,6 +23,7 @@ typedef enum{TRUE,FALSE}boolean;
  * findElem();
  * deleteElem();
  * deleteAllOccur();
+ * clean();
  * 
  * assignment:
  * insertSorted();
@@ -44,6 +45,10 @@ void display(List A){
     }else{
         printf("Empty \n");
     }
+}
+
+void clean(List* L){
+    L->count = 0;
 }
 
 // List Operations //
@@ -105,10 +110,6 @@ void deleteElem(List* L,char elem){
         }
         L->count--;
     }
-}
-
-void clean(List* L){
-    L->count = 0;
 }
 
 void deleteAllOccur(List* L, char elem){

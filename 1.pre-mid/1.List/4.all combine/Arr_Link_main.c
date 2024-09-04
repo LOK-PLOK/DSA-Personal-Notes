@@ -63,6 +63,8 @@ int main(){
     deleteAllOccur(&test, 'A');
     display(test);
 
+    clean(&test);
+
     
     // printf("\nAssignment Area\n");
     // printf("\ninsertSorted is done above\n");
