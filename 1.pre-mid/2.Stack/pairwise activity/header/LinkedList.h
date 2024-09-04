@@ -3,88 +3,90 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 5
 
-typedef struct node{
+typedef struct node {
     char elem;
     struct node* next;
 }*Stack;
 
-void initStack(Stack* A){
-    (*A) = NULL;
-}
 
-int isEmpty(Stack A){
-    return(A == NULL)? 1:0;
+void initStack(Stack* A) {
+    *A = NULL;
 }
 
 
-void push(Stack* A, char elem){
+int isEmpty(Stack A) {
+    return (A == NULL)? 1:0;
+}
+
+
+void push(Stack* A, char elem) {
     Stack temp = (Stack)malloc(sizeof(struct node));
-    if(temp != NULL){
-       temp->elem = elem;
-       temp->next = *A;
-       *A = temp;
+    if (temp != NULL) {
+        temp->elem = elem;
+        temp->next = *A;
+        *A = temp;
     }
 }
 
-void pop(Stack* A){
-    if(!isEmpty(*A)){
+void pop(Stack* A) {
+    if (!isEmpty(*A)) {
         Stack temp = *A;
-        *A = temp->next;
+        *A = (*A)->next;
         free(temp);
-    }else{
-        printf("Stack is Empty\n");       
+    } else {
+        printf("Stack is Empty\n");
     }
 }
 
-int top(Stack A){
+
+char top(Stack A) {
     return A->elem;
 }
 
-int isEmpty(Stack A){
-    return(A == NULL)? 1:0;
-}
-
 void insertBottom(Stack* A, char elem) {
-    Stack temp,trav;
-    initStack(&temp);   
+    Stack temp = NULL;
 
-    char topElem;
-    for(trav = *A; trav != NULL; trav = trav->next){
-        topElem = top(trav);
+    while (!isEmpty(*A)) {
+        push(&temp, top(*A));
         pop(A);
-        push(&temp, topElem);
     }
+    push(A, elem);
 
-    push(&temp,elem);
-
-    for(trav = temp; trav != NULL; trav = trav->next){
-        topElem = top(temp);
+    while (!isEmpty(temp)) {
+        push(A, top(temp));
         pop(&temp);
-        push(A, topElem);
     }
 }
 
-void display(Stack A){
-    printf("\nStack: ");
-    if(A != NULL){
-        Stack trav;
-        for(trav = A; trav != NULL; trav = trav->next){
-            printf("%d ",trav->elem);
+void display(Stack A) {
+    Stack temp = NULL;
+    printf("Stack: ");
+    if (!isEmpty(A)) {
+        while (!isEmpty(A)) {
+            printf("%c ",top(A));
+            push(&temp, top(A));
+            pop(&A);
         }
-    }else{
+        
+        while (!isEmpty(temp)) {
+            push(&A, top(temp));
+            pop(&temp);
+        }
+        printf("\n");
+    } else {
         printf("Empty\n");
     }
 }
-void clean(Stack* A){
+
+// Clean (free) the stack
+void clean(Stack* A) {
     Stack temp;
-    while(*A != NULL){
+    while (*A != NULL) {
         temp = *A;
-        *A = temp->next;
+        *A = (*A)->next;
         free(temp);
     }
 }
-
 
 #endif

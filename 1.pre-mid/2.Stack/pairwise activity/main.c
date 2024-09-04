@@ -1,5 +1,5 @@
-#include "./header/array.h"
-// #include "./header/LinkedList.h"
+// #include "./header/array.h"
+#include "./header/LinkedList.h"
 int main(){
     Stack S;
     
