@@ -74,13 +74,11 @@ void insertSorted(List* L, char elem){
     if(L->count != MAX){
         int i,j;
         for(i=0;i<L->count && L->elem[i] < elem; i++){}
-        if(i!= L->count){
             for(j = L->count; j>i; j--){
                 L->elem[j] = L->elem[j-1];
             }
             L->elem[j] = elem;
             L->count++;
-        }
     }
 }
 

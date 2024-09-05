@@ -97,11 +97,9 @@ void insertSorted(List* A, VirtualHeap* VH, char elem){
     
     if(temp != -1){
         for(trav = A; *trav != -1 && VH->Nodes[*trav].elem < elem; trav = &(VH->Nodes[*trav].next)){}
-        if(*trav != -1){
             VH->Nodes[temp].elem = elem;
             VH->Nodes[temp].next = *trav;
             *trav = temp;
-        }
     }
 }
 
