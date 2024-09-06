@@ -5,7 +5,7 @@
 
 ### Confirmed Information:
 
-## Pre-midterm Topics:
+# Pre-midterm Topics:
 - ADT List
 - ADT Stack
 - ADT Queue
@@ -60,4 +60,34 @@
 
 ### Todo:
 Solve Stack and Queue related LeetCode problems
+
+
+# Midterm Topics:
+- ADT Set
+- ADT Dictionary
+
+### ADT Set
+- A collection of members(or elements), each member of a set either is itself a set or is a primitive element call an atom. **All members of a set are different**
+- No set can contain two copies of the same element.
+
+### ADT's based on Set
+- ADT UID (**Union, Intersect, Difference**)
+- Dictionary (to be studied)
+- Priority Queue (to be studied)
+
+### UID Implementations
+- **Array** - static or dynamic
+- **Linked List**- single or doubly, and also sorted and unsorted
+- **Cursor based**
+- **Bit-vector** (NEW)
+  - Operators:
+    - **'&'** and **'|'**
+
+
+# Other mentions:
+- Hashing
+- Dictionary
+- Bitwise operators
+  
+
 
