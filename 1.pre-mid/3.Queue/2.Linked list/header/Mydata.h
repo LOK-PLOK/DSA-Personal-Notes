@@ -1,6 +1,9 @@
 #ifndef Student_definition_H
 #define Student_definition_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct{
     char fname[20];
@@ -16,3 +19,14 @@ typedef struct{
 
 
 #endif
+
+// typedef Student Data;
+// typedef struct node{
+//     Data elem;
+//     struct node* link;
+// }Nodetype,*NodePtr;
+
+// typedef struct{
+//     NodePtr head;
+//     NodePtr tail;
+// }Queue;
