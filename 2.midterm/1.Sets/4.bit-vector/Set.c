@@ -91,11 +91,11 @@ void insert(SET* S, int elem){
 }
 
 int isMember(SET S, int elem){
-    return (S & (1 << elem-1));  // Return non-zero if the bit is set
+    return (S & (1 << elem));  // Return non-zero if the bit is set
 }
 
 void delete(SET* S, int elem){
-    *S &= ~(1 << elem-1);  // Clear the bit at position `elem`
+    *S &= ~(1 << elem);  // Clear the bit at position `elem`
 }
 
 SET Union(SET A, SET B){
