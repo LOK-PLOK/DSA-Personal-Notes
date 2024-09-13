@@ -42,7 +42,7 @@ int main(){
 
     // Demonstrate isMember
     printf("isMember(A,1): %d\n", isMember(A, 1)? 1 : 0);
-    printf("isMember(A,2): %d\n", isMember(A, 2)? 1 : 0);
+    printf("isMember(B,0): %d\n", isMember(B, 0)? 1 : 0);
     
     // Delete elements 1 and 3 from A
     delete(&A, 1);
@@ -91,11 +91,11 @@ void insert(SET* S, int elem){
 }
 
 int isMember(SET S, int elem){
-    return (S & (1 << elem));  // Return non-zero if the bit is set
+    return (S & (1 << elem-1));  // Return non-zero if the bit is set
 }
 
 void delete(SET* S, int elem){
-    *S &= ~(1 << elem);  // Clear the bit at position `elem`
+    *S &= ~(1 << elem-1);  // Clear the bit at position `elem`
 }
 
 SET Union(SET A, SET B){
