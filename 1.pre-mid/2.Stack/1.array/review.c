@@ -1,3 +1,12 @@
+/**
+ * Stack operations
+ * Push() insert an element at the top of the stack
+ * Pop() delete an elemen at the top of the stack
+ * Top() return the top element of the stack // different for ADT 
+ * Size() return the size of the stack
+ * isEmpty() returns 1 if true and 0 if not
+ * isFull() returns 1 if true and 0 if not
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -10,6 +19,7 @@ typedef struct {
 
 Stack initStack();
 void displayStack(Stack A);
+void displayStackV2(Stack* A);
 char topElem(Stack A);
 bool isEmpty(Stack A);
 bool isFull(Stack A);
@@ -40,7 +50,7 @@ int main(){
     printf("\nPop() 2 times\n");
     Pop(&S);
     Pop(&S);
-    displayStack(S);
+    displayStackV2(&S);
 }
 
 Stack initStack(){
@@ -94,14 +104,24 @@ void displayStack(Stack A){
     
 }
 
-
+void displayStackV2(Stack* A){
+    int top = A->top;
+    while(!isEmpty(*A)){
+        printf("%c ",A->elem[A->top]);
+        A->top -= 1;
+    }
+    A->top = top;
+}
 
 /**
- * Stack operations
- * Push() insert an element at the top of the stack
- * Pop() delete an elemen at the top of the stack
- * Top() return the top element of the stack // different for ADT 
- * Size() return the size of the stack
- * isEmpty() returns 1 if true and 0 if not
- * isFull() returns 1 if true and 0 if not
+ *IMPORTANT: This might be wrong but will be made into considerations 
+ *
+ * displayStackV2 might look like you are travering in a list but in all actuallity the word "traverse" is when 
+ * you have a variable that is looping through a LIST
+ * 
+ * with following the STACK data structure we are actually traversing via the TOP pointer until LIST/STACK is empty, 
+ * 
+ * same as traversing but not using a variable to traverse
+ * 
+ * NOTE: must USE and ACCESS via the HEAD or TOP pointer
  */
