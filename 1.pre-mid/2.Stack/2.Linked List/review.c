@@ -100,23 +100,3 @@ void displayStackV2(Stack* A){
     }
     *A = top;
 }
-
-/**
- * IMPORTANT: This might be wrong but will be made into considerations 
- * 
- * displayStackV2 might look like you are travering in a list but in all actuallity the word "traverse" is when 
- * you have a variable that is looping through a LIST
- * 
- * with following the STACK data structure we are actually traversing via the TOP pointer until LIST/STACK is empty, 
- * 
- * same as traversing but not using a variable to traverse
- * 
- * NOTE: must USE and ACCESS via the HEAD or TOP pointer
- * 
- * you can do insertSorted, insertAtPos, deleteElem, but it must be only using the TOP/HEAD pointer
- * you must also have a pointer to the top of the stack
- * Linked List implementation should be something like (Stack top = *A;) we are saving the address or the location of the top node
- * 
- * after execution of display or insertSorted,
- * *A must be re assigned to top element, which is *A = top;
- */
