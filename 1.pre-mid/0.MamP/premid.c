@@ -38,10 +38,6 @@ Boolean isAscending(Queue A){
     return (A.front == A.rear)? TRUE:FALSE;
 }
 
-/**
- * This is somewhat wrong or it is actually wrong because Im using a temporary variable that holds the next NODE
- */
-
 Boolean isAscendingV2(Queue A){
     unsigned int prevID = A.front->stud.ID;
     A.front = A.front->link;
@@ -55,6 +51,3 @@ Boolean isAscendingV2(Queue A){
     return (A.front == NULL)? TRUE: FALSE;
 }
 
-// both solutions are still not sure if it is following the Queue data structure but they are possible solution
-
-// Solutions are still being fact checked or confirmed
