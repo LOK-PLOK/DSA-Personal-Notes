@@ -50,6 +50,10 @@ int main(){
     push(&S ,'C');
     push(&S ,'D');
     displayStack(&S);
+
+    printf("\ncalling insertSorted('B')\n");
+    insertSorted(&S, 'B');
+    displayStack(&S);
     
     return 0;
 }
@@ -83,10 +87,10 @@ void pop(Stack* A){
 }
 
 // Need to do again because I did not fully understood it
-void pushWithoutMalloc(Stack* A, Stack B){
-    if(B != NULL){
-        B->link = *A;
-        *A = B;
+void pushWithoutMalloc(Stack* A, Stack temp){
+    if(temp != NULL){
+        temp->link = *A;
+        *A = temp;
     }
 }
 // Need to do again because I did not fully understood it
@@ -145,5 +149,24 @@ void displayStack(Stack* A) {
     }
 }
 
-void insertSorted(Stack*A, char elem);
+void insertSorted(Stack*A, char elem){
+    Stack temp = initStack();
+    Stack Node = (Stack)malloc(sizeof(struct node));
+
+    if(Node != NULL){
+        while(*A != NULL && (*A)->data > elem){
+            Stack B = popWithoutFree(A);
+            pushWithoutMalloc(&temp, B);
+        }
+
+        Node->data = elem;
+        Node->link = *A;
+        *A = Node;
+
+        while(temp != NULL){
+            Stack B = popWithoutFree(&temp);
+            pushWithoutMalloc(A,B);
+        }   
+    }
+}
 
