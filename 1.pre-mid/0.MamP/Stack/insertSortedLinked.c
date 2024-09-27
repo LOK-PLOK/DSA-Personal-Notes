@@ -155,17 +155,17 @@ void insertSorted(Stack*A, char elem){
 
     if(Node != NULL){
         while(*A != NULL && (*A)->data > elem){
-            Stack B = popWithoutFree(A);
-            pushWithoutMalloc(&temp, B);
+            Stack B = popWithoutFree(A); // seperating the Node from the Original Stack
+            pushWithoutMalloc(&temp, B); // connecting the Node to the Temporary Stack
         }
 
-        Node->data = elem;
+        Node->data = elem;               // Putting the new Node to the Original Stack
         Node->link = *A;
         *A = Node;
 
         while(temp != NULL){
-            Stack B = popWithoutFree(&temp);
-            pushWithoutMalloc(A,B);
+            Stack B = popWithoutFree(&temp); // seperating the Node from the Temporary Stack
+            pushWithoutMalloc(A,B);          // puting the Node back to the Original Stack
         }   
     }
 }
