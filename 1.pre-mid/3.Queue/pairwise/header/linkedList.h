@@ -16,7 +16,9 @@ typedef struct {
 }Queue;
 
 Queue initQueue(){
-    Queue temp = {.front = NULL, .rear = NULL};
+    Queue temp;
+    temp.front = NULL;
+    temp.rear = NULL;
     return temp;
 }
 
