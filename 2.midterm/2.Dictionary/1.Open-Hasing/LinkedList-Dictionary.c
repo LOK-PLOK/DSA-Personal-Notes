@@ -29,7 +29,7 @@ int main(){
     displayDic(D);
     Set A = {0,13,20,28,30,33,45,48,108};
     
-    populateDic(A,D);
+    populateDic(D,A);
     printf("\n\n");
     displayDic(D);
 
@@ -38,6 +38,7 @@ int main(){
     displayDic(D);
 
     int num = 48;
+    // int num = 108;
     printf("The number %d is %s",num,(isMember(D,num))? "A member":"Not a member");
 
     return 0;

@@ -46,7 +46,8 @@ int main(){
     printf("\n\n");
     displayDic(D,vh);
 
-    int num = 108;
+    int num = 48;
+    // int num = 108;
     printf("The number %d is %s",num,(isMember(D,vh,num))? "A member":"Not a member");
 
     return 0;
