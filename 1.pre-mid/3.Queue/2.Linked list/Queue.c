@@ -15,6 +15,8 @@ void initQueue(Queue* A);
 void read(Queue A);
 void enqueue(Queue* A,int elem);
 void dequeue(Queue* A);
+void makeEmpty(Queue* A);
+void insertSorted(Queue* Q,int elem);
 
 int main(){
     Queue Q;
@@ -28,10 +30,27 @@ int main(){
     enqueue(&Q,5);
     read(Q);
 
-    printf("\nDequeue(): ");
+    printf("\nDequeue(): \n");
     dequeue(&Q);
     read(Q);
 
+    printf("\n\nEmpty():");
+    makeEmpty(&Q);
+    read(Q);
+
+    printf("\n\nEnqueing (5,6,8,9,10): ");
+    enqueue(&Q,5);
+    enqueue(&Q,6);
+    enqueue(&Q,8);
+    enqueue(&Q,9);
+    enqueue(&Q,10);
+    read(Q);
+
+    printf("\n\ninsertSorted(7): ");
+    insertSorted(&Q,7);
+    read(Q);
+
+    return 0;
 }
 
 void initQueue(Queue* A){
@@ -71,5 +90,34 @@ void read(Queue A){
         }
     }else{
         printf("Empty\n");
+    }
+}
+
+void makeEmpty(Queue* A){
+    while(A->front != NULL){
+        dequeue(A);
+    }
+}
+
+void insertSorted(Queue* Q,int elem){
+    Queue temp;
+    initQueue(&temp);
+
+    
+    while(Q->front != NULL && Q->front->data < elem){
+        enqueue(&temp,Q->front->data);
+        dequeue(Q);
+    }
+
+    enqueue(&temp,elem);
+
+    while(Q->front != NULL){
+        enqueue(&temp,Q->front->data);
+        dequeue(Q);
+    }
+
+    while(temp.front != NULL){
+        enqueue(Q,temp.front->data);
+        dequeue(&temp);
     }
 }
