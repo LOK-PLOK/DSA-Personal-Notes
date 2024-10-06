@@ -29,7 +29,7 @@ int main(){
     displayDic(D);
     Set A = {0,13,20,28,30,33,45,48,108};
     
-    populateDic(D,A);
+    populateDic(A,D);
     printf("\n\n");
     displayDic(D);
 
