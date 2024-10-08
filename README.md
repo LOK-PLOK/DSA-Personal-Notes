@@ -58,10 +58,6 @@
 - Stacks: in printing the elements, starts from the top(last inserted) element and transfer the elements to another stack
 - Queue: in printing the elements, starts from the front(first inserted) element (not sure)
 
-### Todo:
-Solve Stack and Queue related LeetCode problems
-
-
 # Midterm Topics:
 - ADT Set
 - ADT Dictionary
@@ -89,6 +85,46 @@ Solve Stack and Queue related LeetCode problems
 - Dictionary
 - Bitwise operators
 
+# Pre-Final Topics
+1. **ADT Tree and Implementations** [Source: Data Structure by Aho, Hopcroft, and Ullman]
+	- Definition of a tree
+	- Basic concepts and terms related to tree
+	- Tree Traversals **[Preorder, Inorder, Postorder]**
+	- ADT Tree Implementations
+		- ***Parent Pointer Implemenation***
+		- ***List of Children and Implementation***
+	- Binary Tree definition and Implementation
+	- Expression Trees
+	- Huffman Code
+
+2. **Binary Search Tree (BST)** [Sources: There are many sites in the internet such as Geeks for Geeks]
+	- Description and Implementation
+	- Operations: Insert, Delete, and Member
+	- Similarity and Difference between BST ans AVL trees
+	- Binary Search vs Sequential Search
+
+3. ADT Priority Queue
+	- Partially Ordered Tree (POT)
+	- **Min and Max heap**
+		- ***MinHeap*** ==> Operations: insert and deleteMin [Source: Source: Data Structure by Aho, Hopcroft, and Ullman]
+		- ***MaxHeap*** ==> Operations: insert and deleteMax [Sources: Internet]
+	- **MinHeapify and MaxHeapify**
+		- ***Version 1***: Insert all elements in an initially empty Pot [Source: ebook]
+		- ***Version 2***: Heapify starting with lowest level parent [Sources: Internet]
+
+4. **Heapsort Sorting Technique** (in place)
+	- A sorting algorith is an "in place" sorting algorithm if there is no additional array is used when implementing the sorting process.
+
+# Final Topics
+1. **Directed and Undirected Graph** [Source: Data Structure by Aho, Hopcroft, and Ullman]
+	- Concepts
+	- Graph Implementations:
+		- ***Adjacency Matrix*** and 
+		- ***Adjacency List***
+2. **Graph Algorithms** [Data Structure by Aho, Hopcroft, and Ullman]
+	- **Shortest Paths**: *Dijkstra's*, *Floyd's*, and *Warshall's* Algorithms
+	- **Traversal**: *Depth First Search (DFS)* and *Breadth First Search (BFS)*
+	- **Minimun Cost Spanning Tree**: *Prim's* and *Kruskal's Algorithms*
 ---
 
 &copy; 2024 Paul France M. Detablan. All rights reserved.
