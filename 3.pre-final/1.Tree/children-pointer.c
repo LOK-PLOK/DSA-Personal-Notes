@@ -16,14 +16,42 @@ typedef struct{
 void initTree(Tree* T);
 void display(Tree T);
 
+void insertRoot(int elem,Tree* T);
+void insert(int elem, int parent, Tree* T);
+void preorder(int root, Tree T);
+void inorder(int root, Tree T);
+void postorder(int root, Tree T);
 
 //This is to be continued
 
 int main(){
     Tree T;
     initTree(&T);
+    printf("Tree initalization:\n");
     display(T);
 
+    insertRoot(5,&T);
+    insert(2,5,&T);
+    insert(4,5,&T);
+    insert(0,5,&T);
+    insert(7,2,&T);
+    insert(1,2,&T);
+    insert(6,1,&T);
+    insert(8,0,&T);
+    printf("After insertion:\n");
+    display(T);
+
+    printf("Preorder Traversal:\n");
+    preorder(T.root,T);
+    printf("\n\n");
+    
+    printf("Inorder Traversal:\n");
+    inorder(T.root,T);
+    printf("\n\n");
+
+    printf("Postorder Traversal:\n");
+    postorder(T.root,T);
+    printf("\n\n");
     return 0;
 }
 
@@ -33,6 +61,23 @@ void initTree(Tree* T){
     int i;
     for(i=0;i<MAX;i++){
         T->Nodes[i] = NULL;
+    }
+}
+
+void insertRoot(int elem,Tree* T){
+    T->root = elem;
+}
+
+void insert(int elem, int parent, Tree* T){
+    if(parent < MAX && parent >=0){
+        Parent* trav,temp;
+        for(trav = &T->Nodes[parent];*trav != NULL;trav = &(*trav)->link){}
+        temp = (Parent)malloc(sizeof(struct node));
+        if(temp!= NULL){
+            temp->data = elem;
+            temp->link = *trav;
+            *trav = temp;
+        }
     }
 }
 
@@ -46,4 +91,40 @@ void display(Tree T){
         }
         printf("NULL\n");
     }
+    printf("\n\n");
+}
+
+void preorder(int root, Tree T){
+
+    printf("%d ", root);
+
+    Parent trav;
+    for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
+        preorder(trav->data,T);
+    }
+
+}
+
+// This is Chatgpt generated
+void inorder(int root, Tree T){
+    Parent trav;
+
+    if(T.Nodes[root] != NULL){
+        inorder(T.Nodes[root]->data,T);
+    }
+
+    printf("%d ",root);
+
+    for(trav = (T.Nodes[root] != NULL ? T.Nodes[root]->link : NULL); trav != NULL; trav = trav->link){
+        inorder(trav->data,T);
+    }
+}
+
+void postorder(int root, Tree T){
+    Parent trav;
+
+    for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
+        postorder(trav->data,T);
+    }
+        printf("%d ",root);
 }
