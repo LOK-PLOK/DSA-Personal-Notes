@@ -95,36 +95,38 @@ void display(Tree T){
 }
 
 void preorder(int root, Tree T){
+    if(root != 1){
+        printf("%d ", root);
 
-    printf("%d ", root);
-
-    Parent trav;
-    for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
-        preorder(trav->data,T);
-    }
-
-}
-
-// This is Chatgpt generated
-void inorder(int root, Tree T){
-    Parent trav;
-
-    if(T.Nodes[root] != NULL){
-        inorder(T.Nodes[root]->data,T);
-    }
-
-    printf("%d ",root);
-
-    for(trav = (T.Nodes[root] != NULL ? T.Nodes[root]->link : NULL); trav != NULL; trav = trav->link){
-        inorder(trav->data,T);
+        Parent trav;
+        for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
+            preorder(trav->data,T);
+        }
     }
 }
 
+// This is Copilot generated
+void inorder(int root, Tree T) {
+    Parent trav = T.Nodes[root];
+    
+    if (trav != NULL) {
+        inorder(trav->data, T); // Visit the first child (left subtree)
+        trav = trav->link; // Move to the next sibling
+    }
+    
+    printf("%d ", root); // Visit the root node
+    
+    for (; trav != NULL; trav = trav->link) {
+        inorder(trav->data, T); // Visit the remaining children (right subtree)
+    }
+}
 void postorder(int root, Tree T){
-    Parent trav;
+    if(root != -1){
+        Parent trav;
 
-    for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
-        postorder(trav->data,T);
+        for(trav = T.Nodes[root]; trav != NULL; trav = trav->link){
+            postorder(trav->data,T);
+        }
+            printf("%d ",root);
     }
-        printf("%d ",root);
 }
