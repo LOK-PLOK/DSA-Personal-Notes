@@ -43,6 +43,16 @@ Node initTree(){
     return temp; // or just return NULL directly
 }
 
+/**
+ * @brief Inserts an element into the Binary Search Tree (BST).
+ *
+ * This function inserts a new element into the BST. If the tree is empty,
+ * it creates a new node with the given element. If the tree is not empty,
+ * it recursively finds the correct position for the new element and inserts it.
+ *
+ * @param node A pointer to the root node of the BST.
+ * @param elem The element to be inserted into the BST.
+ */
 void insert(Node* node, int elem){
     if(*node == NULL){
         Node temp = (Node)malloc(sizeof(struct node));
@@ -60,6 +70,15 @@ void insert(Node* node, int elem){
     }
 }
 
+/**
+ * @brief Displays the elements of the Binary Search Tree (BST) in Preorder.
+ *
+ * This function prints the elements of the BST in Preorder traversal.
+ * Preorder traversal visits the root node first, then the left subtree,
+ * and finally the right subtree.
+ *
+ * @param node The root node of the BST.
+ */
 void displayPreorder(Node node){
     if(node != NULL){
         printf("%d ",node->data);
@@ -68,6 +87,14 @@ void displayPreorder(Node node){
     }
 }
 
+/**
+ * @brief Displays the elements of a binary search tree (BST) in inorder traversal.
+ *
+ * This function recursively traverses the BST in an inorder manner (left subtree, root, right subtree)
+ * and prints the data of each node.
+ *
+ * @param node The root node of the BST to be traversed.
+ */
 void displayInorder(Node node){
     if(node != NULL){
         displayInorder(node->left);
@@ -77,6 +104,14 @@ void displayInorder(Node node){
 }
 
 
+/**
+ * @brief Displays the nodes of a binary search tree (BST) in postorder traversal.
+ *
+ * This function recursively traverses the given binary search tree in postorder
+ * (left subtree, right subtree, root) and prints the data of each node.
+ *
+ * @param node The root node of the binary search tree to be traversed.
+ */
 void displayPostorder(Node node){
     if(node != NULL){
         displayPostorder(node->left);
