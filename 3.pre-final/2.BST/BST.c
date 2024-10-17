@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node{
     int data;
@@ -12,6 +13,8 @@ void insert(Node* node, int elem);
 void displayInorder(Node node);
 void displayPreorder(Node node);
 void displayPostorder(Node node);
+bool isMember(Node node, int elem);
+
 
 int main(){
     Node A = initTree();
@@ -35,6 +38,7 @@ int main(){
     displayPostorder(A);
     printf("\n\n");
 
+    printf("isMember(A,12): %d\n", isMember(A,12));
     return 0;
 }
 
@@ -86,6 +90,14 @@ void displayPostorder(Node node){
         displayPostorder(node->right);
         printf("%d ",node->data);
     }
+}
+
+bool isMember(Node node, int elem){
+    for(;node != NULL && node->data != elem;){
+        node=(elem < node->data)? node->left:node->right;
+    }
+
+    return (node != NULL)? true:false;
 }
 
 // To be continued, Delete function
