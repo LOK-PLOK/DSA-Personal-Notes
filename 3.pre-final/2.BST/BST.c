@@ -15,7 +15,7 @@ void displayInorder(Node node);
 void displayPreorder(Node node);
 void displayPostorder(Node node);
 bool isMember(Node node, int elem);
-
+void delete(Node* node, int elem);
 
 int main(){
     Node A = initTree();
@@ -40,6 +40,12 @@ int main(){
     printf("\n\n");
 
     printf("isMember(A,12): %d\n", isMember(A,12));
+
+    printf("\n\n");
+    delete(&A, 3);
+    displayPreorder(A);
+    printf("\n\n");
+
     return 0;
 }
 
@@ -83,7 +89,6 @@ void insertIterative(Node* node, int elem){
     }
 }
 
-
 void displayPreorder(Node node){
     if(node != NULL){
         printf("%d ",node->data);
@@ -92,7 +97,6 @@ void displayPreorder(Node node){
     }
 }
 
-
 void displayInorder(Node node){
     if(node != NULL){
         displayInorder(node->left);
@@ -100,7 +104,6 @@ void displayInorder(Node node){
         displayInorder(node->right);
     }
 }
-
 
 void displayPostorder(Node node){
     if(node != NULL){
@@ -118,4 +121,29 @@ bool isMember(Node node, int elem){
     return (node != NULL)? true:false;
 }
 
-// To be continued, Delete function
+//Iterative version
+void delete(Node* node, int elem){
+    Node* trav, temp;
+
+    for(trav = node; *trav != NULL && (*trav)->data != elem;){
+        trav = (elem < (*trav)->data)? &(*trav)->left:&(*trav)->right;
+    }
+
+    if(*trav != NULL){
+        Node* min;
+        if((*trav)->left != NULL && (*trav)->right != NULL){ // Node with 2 childs
+            for(min = &(*trav)->right; (*min)->left != NULL; min = &(*min)->left){}
+            (*trav)->data = (*min)->data;
+            temp = *min;
+            *min = (*min)->right;
+        }else if((*trav)->left == NULL && (*trav)->right == NULL){ // Node with 0 childs
+            temp = *trav;
+            *trav = NULL;
+        }else{          // Node with 1 childs
+            temp = *trav;
+            *trav = (*trav)->left != NULL? (*trav)->left:(*trav)->right;
+        }
+
+        free(temp);
+    }
+}
