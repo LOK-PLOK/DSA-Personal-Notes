@@ -78,3 +78,37 @@ Steps:
 - Build a frequency table of all characters in the input.
 - Construct a binary tree called the Huffman tree, where each leaf node corresponds to a character and the path from the root to the leaf defines the character's code.
 - Traverse the tree to assign binary codes to each character.
+
+
+## Slides
+![alt text](./images/image.png)
+![alt text](./images/image-1.png)
+![alt text](./images/image-2.png)
+![alt text](./images/image-3.png)
+![alt text](./images/image-4.png)
+![alt text](./images/image-5.png)
+![alt text](./images/image-6.png)
+![alt text](./images/image-7.png)
+![alt text](./images/image-8.png)
+![alt text](./images/image-9.png)
+![alt text](./images/image-10.png)
+![alt text](./images/image-11.png)
+![alt text](./images/image-12.png)
+![alt text](./images/image-13.png)
+![alt text](./images/image-14.png)
+![alt text](./images/image-15.png)
+![alt text](./images/image-16.png)
+![alt text](./images/image-17.png)
+![alt text](./images/image-18.png)
+![alt text](./images/image-19.png)
+![alt text](./images/image-20.png)
+![alt text](./images/image-21.png)
+![alt text](./images/image-22.png)
+![alt text](./images/image-23.png)
+![alt text](./images/image-24.png)
+![alt text](./images/image-25.png)
+![alt text](./images/image-26.png)
+![alt text](./images/image-27.png)
+![alt text](./images/image-28.png)
+![alt text](./images/image-29.png)
+![alt text](./images/image-30.png)
