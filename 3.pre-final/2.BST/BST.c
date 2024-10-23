@@ -10,6 +10,7 @@ typedef struct node{
 
 Node initTree();
 void insert(Node* node, int elem);
+void insertIterative(Node* node, int elem);
 void displayInorder(Node node);
 void displayPreorder(Node node);
 void displayPostorder(Node node);
@@ -20,14 +21,14 @@ int main(){
     Node A = initTree();
 
     printf("\n");
-    insert(&A,13);
-    insert(&A,3);
-    insert(&A,14);
-    insert(&A,1);
-    insert(&A,4);
-    insert(&A,18);
-    insert(&A,2);
-    insert(&A,12);
+    insertIterative(&A,13);
+    insertIterative(&A,3);
+    insertIterative(&A,14);
+    insertIterative(&A,1);
+    insertIterative(&A,4);
+    insertIterative(&A,18);
+    insertIterative(&A,2);
+    insertIterative(&A,12);
     printf("PreOrder:\t");
     displayPreorder(A);
     printf("\n\n");
@@ -47,7 +48,7 @@ Node initTree(){
     return temp; // or just return NULL directly
 }
 
-
+// recursive version
 void insert(Node* node, int elem){
     if(*node == NULL){
         Node temp = (Node)malloc(sizeof(struct node));
@@ -61,6 +62,23 @@ void insert(Node* node, int elem){
             insert(&(*node)->left, elem);
         }else{
             insert(&(*node)->right, elem);
+        }
+    }
+}
+
+//Iterative version
+void insertIterative(Node* node, int elem){
+    Node* trav, temp;
+    for(trav = node; *trav != NULL;){
+        trav = (elem < (*trav)->data)? &(*trav)->left: &(*trav)->right;
+    }
+
+    if(*trav == NULL){
+        temp = (Node)malloc(sizeof(struct node));
+        if(temp != NULL){
+            temp->data = elem;
+            temp->left = temp->right = NULL;
+            *trav = temp;
         }
     }
 }
