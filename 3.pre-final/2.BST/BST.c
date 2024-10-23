@@ -16,19 +16,20 @@ void displayPreorder(Node node);
 void displayPostorder(Node node);
 bool isMember(Node node, int elem);
 void delete(Node* node, int elem);
+void freeAll(Node* node);
 
 int main(){
     Node A = initTree();
 
     printf("\n");
+    insertIterative(&A,10);
+    insertIterative(&A,2);
     insertIterative(&A,13);
-    insertIterative(&A,3);
-    insertIterative(&A,14);
     insertIterative(&A,1);
     insertIterative(&A,4);
-    insertIterative(&A,18);
-    insertIterative(&A,2);
     insertIterative(&A,12);
+    insertIterative(&A,14);
+    
     printf("PreOrder:\t");
     displayPreorder(A);
     printf("\n\n");
@@ -42,10 +43,19 @@ int main(){
     printf("isMember(A,12): %d\n", isMember(A,12));
 
     printf("\n\n");
-    delete(&A, 3);
+    printf("afer deleting 13: \n");
+    delete(&A, 13);
+    printf("PreOrder:\t");
     displayPreorder(A);
     printf("\n\n");
+    printf("InOrder:\t");
+    displayInorder(A);
+    printf("\n\n");
+    printf("PostOrder:\t");
+    displayPostorder(A);
+    printf("\n\n");
 
+    freeAll(&A);
     return 0;
 }
 
@@ -122,28 +132,38 @@ bool isMember(Node node, int elem){
 }
 
 //Iterative version
-void delete(Node* node, int elem){
-    Node* trav, temp;
+void delete(Node* node, int elem) {
+    Node *trav, temp;
 
-    for(trav = node; *trav != NULL && (*trav)->data != elem;){
-        trav = (elem < (*trav)->data)? &(*trav)->left:&(*trav)->right;
+    for (trav = node; *trav != NULL && (*trav)->data != elem;) {
+        trav = (elem < (*trav)->data) ? &(*trav)->left : &(*trav)->right;
     }
 
-    if(*trav != NULL){
-        Node* min;
-        if((*trav)->left != NULL && (*trav)->right != NULL){ // Node with 2 childs
-            for(min = &(*trav)->right; (*min)->left != NULL; min = &(*min)->left){}
+    if (*trav != NULL) {
+        Node *min;
+
+        if ((*trav)->left != NULL && (*trav)->right != NULL) {
+            for (min = &(*trav)->left; (*min)->right != NULL; min = &(*min)->right) {}
             (*trav)->data = (*min)->data;
             temp = *min;
             *min = (*min)->right;
-        }else if((*trav)->left == NULL && (*trav)->right == NULL){ // Node with 0 childs
+        } else if ((*trav)->left == NULL && (*trav)->right == NULL) {
             temp = *trav;
             *trav = NULL;
-        }else{          // Node with 1 childs
+        } else {
             temp = *trav;
-            *trav = (*trav)->left != NULL? (*trav)->left:(*trav)->right;
+            *trav = ((*trav)->left != NULL) ? (*trav)->left : (*trav)->right;
         }
 
         free(temp);
+    }
+}
+
+void freeAll(Node* node){
+    if (*node != NULL) {
+        freeAll(&(*node)->left);
+        freeAll(&(*node)->right);
+        free(*node);
+        *node = NULL;
     }
 }
