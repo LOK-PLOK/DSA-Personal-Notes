@@ -1,169 +1,184 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <string.h>
 
 typedef struct node{
-    int data;
-    struct node *left;
-    struct node *right;
+    int elem;
+    struct node* LC;
+    struct node* RC;
 }*Node;
 
-Node initTree();
-void insert(Node* node, int elem);
-void insertIterative(Node* node, int elem);
-void displayInorder(Node node);
-void displayPreorder(Node node);
-void displayPostorder(Node node);
-bool isMember(Node node, int elem);
-void delete(Node* node, int elem);
-void freeAll(Node* node);
+void initTree(Node* root);
+void insertRec(Node* root, int elem);
+void preOrder(Node root);
+void inOrder(Node root);
+void postOrder(Node root);
+int isMember(Node root, int elem);
+int isMemberRec(Node root, int elem);
+void delete(Node* root, int elem);
+
+/**
+ *            Tree illustration:
+ *                  10
+ *                 /  \
+ *                3    13
+ *               / \   / \
+ *              1   5 11  20
+ *                 /      /
+ *                4      15
+ *                      /
+ *                     14
+ */
 
 int main(){
-    Node A = initTree();
+    Node root;
+    initTree(&root);
 
-    printf("\n");
-    insertIterative(&A,10);
-    insertIterative(&A,2);
-    insertIterative(&A,13);
-    insertIterative(&A,1);
-    insertIterative(&A,4);
-    insertIterative(&A,12);
-    insertIterative(&A,14);
-    
-    printf("PreOrder:\t");
-    displayPreorder(A);
-    printf("\n\n");
-    printf("InOrder:\t");
-    displayInorder(A);
-    printf("\n\n");
-    printf("PostOrder:\t");
-    displayPostorder(A);
-    printf("\n\n");
+    //insert recursive version
+    insertRec(&root, 10);
+    insertRec(&root, 3);
+    insertRec(&root, 13);
+    insertRec(&root, 1);
+    insertRec(&root, 5);
+    insertRec(&root, 11);
+    insertRec(&root, 20);
+    insertRec(&root, 4);
+    insertRec(&root, 15);
+    insertRec(&root, 14);
 
-    printf("isMember(A,12): %d\n", isMember(A,12));
-
+    printf("preOrder:\t");
+    preOrder(root);
     printf("\n\n");
-    printf("afer deleting 13: \n");
-    delete(&A, 13);
-    printf("PreOrder:\t");
-    displayPreorder(A);
+    printf("inOrder:\t");
+    inOrder(root);
     printf("\n\n");
-    printf("InOrder:\t");
-    displayInorder(A);
-    printf("\n\n");
-    printf("PostOrder:\t");
-    displayPostorder(A);
+    printf("postOrder:\t");
+    postOrder(root);
     printf("\n\n");
 
-    freeAll(&A);
+    printf("isMember(2): %s\n", isMember(root,2)? "True":"False");
+    printf("isMember(11): %s\n", isMember(root,11)? "True":"False");
+    printf("\n\n");
+
+    // printf("delete 4: \n"); // no child
+    // delete(&root, 4);
+
+    // printf("delete 15: \n"); // 1 child
+    // delete(&root, 15);
+
+    printf("delete 3: \n"); // 2 child
+    delete(&root, 3);
+
+    printf("preOrder:\t");
+    preOrder(root);
+    printf("\n\n");
+    printf("inOrder:\t");
+    inOrder(root);
+    printf("\n\n");
+    printf("postOrder:\t");
+    postOrder(root);
+    printf("\n\n");
+
+
     return 0;
 }
 
-Node initTree(){
-    Node temp = NULL;
-    return temp; // or just return NULL directly
+// difficulty - very easy
+void initTree(Node* root){
+    *root = NULL;
 }
 
-// recursive version
-void insert(Node* node, int elem){
-    if(*node == NULL){
+// recursive version, difficulty - medium
+void insertRec(Node* root, int elem){
+    if(*root == NULL){
         Node temp = (Node)malloc(sizeof(struct node));
         if(temp != NULL){
-            temp->data = elem;
-            temp->left = temp->right = NULL;
-            *node = temp;
+            temp->elem = elem;
+            temp->LC = temp->RC = NULL;
+            *root = temp;
         }
+    }else if (elem < (*root)->elem){
+        insertRec(&(*root)->LC,elem);
     }else{
-        if(elem <= (*node)->data){
-            insert(&(*node)->left, elem);
+        insertRec(&(*root)->RC,elem);
+    }
+}
+
+// recursive version, difficulty - easy
+void preOrder(Node root){
+    if(root != NULL){
+        printf("%d ",root->elem);
+        preOrder(root->LC);
+        preOrder(root->RC);
+    }
+}
+
+// recursive version, difficulty - easy
+void inOrder(Node root){
+    if(root != NULL){
+        inOrder(root->LC);
+        printf("%d ",root->elem);
+        inOrder(root->RC);
+    }
+}
+
+// recursive version, difficulty - easy
+void postOrder(Node root){
+    if(root != NULL){
+        postOrder(root->LC);
+        postOrder(root->RC);
+        printf("%d ",root->elem);
+    }
+}
+
+// Iterative version, difficulty - easy
+int isMember(Node root, int elem){
+    Node trav;
+    for(trav = root; trav != NULL && trav->elem != elem;){
+        trav = (elem < trav->elem)? trav->LC:trav->RC;
+    }
+
+    return (trav != NULL)? 1:0;
+}
+
+// Recursive version, difficulty easy - medium
+int isMemberRec(Node root, int elem) {
+    if (root == NULL) {
+        return 0;
+    }
+    if (root->elem == elem) {
+        return 1;
+    }
+    if (elem < root->elem) {
+        return isMember(root->LC, elem);
+    } else {
+        return isMember(root->RC, elem);
+    }
+}
+
+// iterative version, difficulty - medium to hard
+void delete(Node* root, int elem){
+    Node *trav,temp;
+
+    for(trav = root; *trav != NULL && (*trav)->elem != elem;){
+        trav = (elem < (*trav)->elem)? &(*trav)->LC:&(*trav)->RC;
+    }
+
+    if(*trav != NULL){
+        Node* minNode;
+        if((*trav)->LC != NULL && (*trav)->LC != NULL){
+            for(minNode = &(*trav)->LC; (*minNode)->RC != NULL; minNode = &(*minNode)->RC){}
+            (*trav)->elem = (*minNode)->elem;
+            temp = *minNode;
+            *minNode = NULL;
+        }else if((*trav)->LC == NULL && (*trav)->LC == NULL){
+            temp = *trav;
+            *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
         }else{
-            insert(&(*node)->right, elem);
-        }
-    }
-}
-
-//Iterative version
-void insertIterative(Node* node, int elem){
-    Node* trav, temp;
-    for(trav = node; *trav != NULL;){
-        trav = (elem < (*trav)->data)? &(*trav)->left: &(*trav)->right;
-    }
-
-    if(*trav == NULL){
-        temp = (Node)malloc(sizeof(struct node));
-        if(temp != NULL){
-            temp->data = elem;
-            temp->left = temp->right = NULL;
-            *trav = temp;
-        }
-    }
-}
-
-void displayPreorder(Node node){
-    if(node != NULL){
-        printf("%d ",node->data);
-        displayPreorder(node->left);
-        displayPreorder(node->right);
-    }
-}
-
-void displayInorder(Node node){
-    if(node != NULL){
-        displayInorder(node->left);
-        printf("%d ",node->data);
-        displayInorder(node->right);
-    }
-}
-
-void displayPostorder(Node node){
-    if(node != NULL){
-        displayPostorder(node->left);
-        displayPostorder(node->right);
-        printf("%d ",node->data);
-    }
-}
-
-bool isMember(Node node, int elem){
-    for(;node != NULL && node->data != elem;){
-        node=(elem < node->data)? node->left:node->right;
-    }
-
-    return (node != NULL)? true:false;
-}
-
-//Iterative version
-void delete(Node* node, int elem) {
-    Node *trav, temp;
-
-    for (trav = node; *trav != NULL && (*trav)->data != elem;) {
-        trav = (elem < (*trav)->data) ? &(*trav)->left : &(*trav)->right;
-    }
-
-    if (*trav != NULL) {
-        Node *min;
-
-        if ((*trav)->left != NULL && (*trav)->right != NULL) {
-            for (min = &(*trav)->left; (*min)->right != NULL; min = &(*min)->right) {}
-            (*trav)->data = (*min)->data;
-            temp = *min;
-            *min = (*min)->right;
-        } else if ((*trav)->left == NULL && (*trav)->right == NULL) {
             temp = *trav;
             *trav = NULL;
-        } else {
-            temp = *trav;
-            *trav = ((*trav)->left != NULL) ? (*trav)->left : (*trav)->right;
         }
 
-        free(temp);
-    }
-}
-
-void freeAll(Node* node){
-    if (*node != NULL) {
-        freeAll(&(*node)->left);
-        freeAll(&(*node)->right);
-        free(*node);
-        *node = NULL;
+        free(temp);   
     }
 }
