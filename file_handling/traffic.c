@@ -37,9 +37,11 @@ void display(Traffic data);
 void displayPOT(POT heap);
 Traffic deleteMin(POT* heap);
 void heapify(POT* heap, int parent);
+int totalTime(POT* heap);
 
 // File handling
 void insertToFile(Traffic data[],int size);
+void insertToCommaSeparatedFile(Traffic data[],int size);
 void readFromFile();
 void insertToMinHeap(POT* heap);
 
@@ -65,6 +67,7 @@ int main(){
     Traffic data[8] = {data1, data2, data3, data4, data5, data6, data7, data8};
 
     insertToFile(data,sizeof(data)/sizeof(data[0]));
+    insertToCommaSeparatedFile(data,sizeof(data)/sizeof(data[0])); //<-----------------------------ACTIVITY 2
     printf("%-20s%-20s%-20s%-20s\n","Priority","Lane","Path","Time(s)");
     readFromFile();
 
@@ -73,14 +76,21 @@ int main(){
     insertToMinHeap(&heap);
     displayPOT(heap);
 
-    int totalPriority = 0;
-    while(heap.lastNdx != -1 && (strcmp(heap.tree[0].Lane,"main")) != 0 || (strcmp(heap.tree[0].Path,"pedestrian") != 0)){
-        totalPriority += heap.tree[0].time;
-        deleteMin(&heap);
-    }
-
+    
+    int totalPriority = totalTime(&heap);// <-------------------------------------ACTIVITY 1 
     printf("\n\nTotal time to MAIN PEDESTRIAN: %-5d\n\n",totalPriority);
     return 0;
+}
+
+// Activity 1 - solution
+int totalTime(POT* heap){
+    int totalPriority = 0;
+    while(heap->lastNdx != -1 && (strcmp(heap->tree[0].Lane,"main")) != 0 || (strcmp(heap->tree[0].Path,"pedestrian") != 0)){
+        totalPriority += heap->tree[0].time;
+        deleteMin(heap);
+    }
+
+    return totalPriority;
 }
 
 void init(POT* heap){
@@ -176,6 +186,20 @@ void insertToFile(Traffic data[],int size){
     fclose(fp);
 }
 
+// Activity 2 - solution
+void insertToCommaSeparatedFile(Traffic data[],int size){
+    FILE* fp = fopen("traffic_result.dat","w");
+
+    if(fp != NULL){
+        for (int i = 0; i < size; i++) {
+        fprintf(fp, "%d,%s,%s,%d\n", data[i].priority, data[i].Lane, data[i].Path, data[i].time);
+    }
+
+    fclose(fp);
+    printf("Results saved to filesuccessfully.\n");
+    }
+}
+
 void readFromFile(){
     FILE* fp = fopen("traffic.dat","rb+");
     if(fp!=NULL){
@@ -195,3 +219,21 @@ void insertToMinHeap(POT* heap){
         }
     }
 }
+
+/**
+ * This is how I understood the question
+ * Activity One:
+ *  "The data will contain the priority, the traffic movement(sign,primary lane and secondary lanes, direction), and the time. this will be stored in the file called "traffic.dat".
+ *   Find the total time before a main pedestrian will be able to cross the road".
+ * 
+ * - basing from the description I will have dummy data and put it inside a file name "traffic.dat", and it said find the total time before a main pedestrian will be able to cross the road.
+ *   however it did not say to store the total time to the traffic.dat file. so I did it in the program but not store it in the file
+ * 
+ * Activity Two:
+ * 
+ *  "The data is similar to activiy one but will be stored in a file separated with a comman and will contain multiple scenarios. 
+ *   The result will be stored back into a file called "traffic_result.dat"".
+ * 
+ * - The way I understood activity 2 is that, it is just the same with activity 1 where you store the file, but this time its the formal is seperated with a comma(this is not CSV),
+ *   and I did not understood this "will contain multiple scenarios", I will just assume that is random data.
+ */
