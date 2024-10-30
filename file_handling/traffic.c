@@ -35,7 +35,8 @@ void populate(POT* heap,Traffic data[],int size);
 void insertToPOT(POT* heap, Traffic data);
 void display(Traffic data);
 void displayPOT(POT heap);
-void deleteMin(POT* heap);
+Traffic deleteMin(POT* heap);
+void heapify(POT* heap, int parent);
 
 // File handling
 void insertToFile(Traffic data[],int size);
@@ -66,9 +67,19 @@ int main(){
     insertToFile(data,sizeof(data)/sizeof(data[0]));
     printf("%-20s%-20s%-20s%-20s\n","Priority","Lane","Path","Time(s)");
     readFromFile();
+
     printf("\n\n");
+
     insertToMinHeap(&heap);
     displayPOT(heap);
+
+    int totalPriority = 0;
+    while(heap.lastNdx != -1 && (strcmp(heap.tree[0].Lane,"main")) != 0 || (strcmp(heap.tree[0].Path,"pedestrian") != 0)){
+        totalPriority += heap.tree[0].time;
+        deleteMin(&heap);
+    }
+
+    printf("\n\nTotal time to MAIN PEDESTRIAN: %-5d\n\n",totalPriority);
     return 0;
 }
 
@@ -122,8 +133,37 @@ void display(Traffic data){
 }
 
 // to be continue
-void deleteMin(POT* heap){
-    // code here
+Traffic deleteMin(POT* heap){
+    Traffic min = heap->tree[0];
+    heap->tree[0] = heap->tree[heap->lastNdx];
+    heap->tree[heap->lastNdx] = min;
+
+    heap->lastNdx --;
+
+    heapify(heap,0);
+
+    return min;
+}
+
+void heapify(POT* heap, int parent){
+    int small = parent;
+    int Lchild = parent*2+1;
+    int Rchild = parent*2+2;
+
+    if(Lchild <= heap->lastNdx && heap->tree[Lchild].priority < heap->tree[small].priority){
+        small = Lchild;
+    }
+
+    if(Rchild <= heap->lastNdx && heap->tree[Rchild].priority < heap->tree[small].priority){
+        small = Rchild;
+    }
+
+    if(small != parent){
+        Traffic temp = heap->tree[parent];
+        heap->tree[parent] = heap->tree[small];
+        heap->tree[small] = temp;
+        heapify(heap,small);
+    }
 }
 
 // File Handline Area
