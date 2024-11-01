@@ -166,17 +166,17 @@ void delete(Node* root, int elem){
 
     if(*trav != NULL){
         Node* minNode;
-        if((*trav)->LC != NULL && (*trav)->LC != NULL){
+        if((*trav)->LC != NULL && (*trav)->RC != NULL){ // 2 childs
             for(minNode = &(*trav)->LC; (*minNode)->RC != NULL; minNode = &(*minNode)->RC){}
             (*trav)->elem = (*minNode)->elem;
             temp = *minNode;
             *minNode = NULL;
-        }else if((*trav)->LC == NULL && (*trav)->LC == NULL){
-            temp = *trav;
-            *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
-        }else{
+        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){ // 0 child
             temp = *trav;
             *trav = NULL;
+        }else{ // 1 child
+            temp = *trav;
+            *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
         }
 
         free(temp);   
