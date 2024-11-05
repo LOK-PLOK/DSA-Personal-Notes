@@ -13,6 +13,7 @@ void display(POT heap);
 void insert(POT* heap, int elem);
 void populate(POT* heap,int data[],int size);
 void heapify(POT* heap,int parent);
+void heapifyV2(POT* heap,int parent);
 int deleteMin(POT *heap);
 
 int main(){
@@ -89,6 +90,30 @@ void heapify(POT* heap,int parent){
     }
 }
 
+void heapifyV2(POT* heap,int parent){
+    int small = parent;
+    int LC = parent*2+1;
+    int RC = parent*2+2;
+    int flag = 0;
+
+    while(!flag){
+        if(LC <= heap->lastNdx && heap->tree[LC] < heap->tree[small]){
+            small = LC;
+        }
+
+        if(RC <= heap->lastNdx && heap->tree[RC] < heap->tree[small]){
+            small = RC;
+        }
+
+        if(small != parent){
+            int temp = heap->tree[small];
+            heap->tree[small] = heap->tree[parent];
+            heap->tree[parent] = temp;
+        }else{
+            flag = 1;
+        }
+    }
+}
 
 void display(POT heap){
     if(heap.lastNdx == -1){
