@@ -54,6 +54,7 @@ int main(){
     MAKENULL(T);
     display(*T);
 
+    free(T);
     return 0;
 }
 
