@@ -12,6 +12,7 @@ void init(POT* heap);
 void display(POT heap);
 void insert(POT* heap, int elem);
 void populate(POT* heap,int data[],int size);
+void heapiftyAll(POT* heap);
 void heapify(POT* heap,int parent);
 void heapifyV2(POT* heap,int parent);
 int deleteMin(POT *heap);
@@ -64,8 +65,15 @@ int deleteMin(POT *heap){
         int deletedElem = heap->tree[0];
         heap->tree[0] = heap->tree[heap->lastNdx];
         heap->lastNdx--;
-        heapify(heap,0);
+        heapifyV2(heap,0);
         return deletedElem;
+    }
+}
+
+void heapiftyAll(POT* heap){
+    int i;
+    for(i = (heap->lastNdx-1)/2;i>=0;i--){
+        heapify(heap,i);
     }
 }
 
@@ -91,12 +99,13 @@ void heapify(POT* heap,int parent){
 }
 
 void heapifyV2(POT* heap,int parent){
-    int small = parent;
-    int LC = parent*2+1;
-    int RC = parent*2+2;
+    int small,LC,RC;
     int flag = 0;
 
     while(!flag){
+        small = parent;
+        LC = parent*2+1;
+        RC = LC+1;
         if(LC <= heap->lastNdx && heap->tree[LC] < heap->tree[small]){
             small = LC;
         }
