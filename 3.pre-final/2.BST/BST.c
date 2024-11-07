@@ -9,6 +9,7 @@ typedef struct node{
 }*Node;
 
 void initTree(Node* root);
+void insert(Node* root, int elem);
 void insertRec(Node* root, int elem);
 void preOrder(Node root);
 void inOrder(Node root);
@@ -86,6 +87,17 @@ int main(){
 // difficulty - very easy
 void initTree(Node* root){
     *root = NULL;
+}
+
+void insert(Node* root, int elem){
+    Node* trav,temp;
+    for(trav = root;*trav != NULL; trav = (elem <(*trav)->elem)? &(*trav)->LC:&(*trav)->RC){}
+    temp = (Node)malloc(sizeof(struct node));
+    if(temp != NULL){
+        temp->elem = elem;
+        temp->LC = temp->RC = NULL;
+        *trav = temp;
+    }
 }
 
 // recursive version, difficulty - medium
