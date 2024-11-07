@@ -73,7 +73,7 @@ int deleteMin(POT *heap){
 void heapiftyAll(POT* heap){
     int i;
     for(i = (heap->lastNdx-1)/2;i>=0;i--){
-        heapify(heap,i);
+        heapifyV2(heap,i);
     }
 }
 
@@ -118,6 +118,7 @@ void heapifyV2(POT* heap,int parent){
             int temp = heap->tree[small];
             heap->tree[small] = heap->tree[parent];
             heap->tree[parent] = temp;
+            parent = small;
         }else{
             flag = 1;
         }
