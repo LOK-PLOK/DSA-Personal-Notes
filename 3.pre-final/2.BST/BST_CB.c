@@ -186,7 +186,7 @@ void delete(vheap* heap, Node* root, int elem){
             for(minSearch = &heap->Node[*trav].LC; heap->Node[*minSearch].RC != -1; minSearch = &heap->Node[*minSearch].RC){}
             heap->Node[*trav].data = heap->Node[*minSearch].data;
             temp = *minSearch;
-            *minSearch = -1;
+            *minSearch = heap->Node[*minSearch].LC;
         }else if(heap->Node[*trav].LC == -1 && heap->Node[*trav].RC == -1){
             temp = *trav;
             *trav = -1;

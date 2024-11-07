@@ -3,20 +3,24 @@
 #include <string.h>
 
 typedef struct node{
-    int elem;
+    int data;
     struct node* LC;
     struct node* RC;
 }*Node;
 
-void initTree(Node* root);
-void insert(Node* root, int elem);
+// BST FUNCTIONS
+void INITIALIZE(Node* root);
+void insertItera(Node* root, int elem);
 void insertRec(Node* root, int elem);
+int isMemberItera(Node root,int elem);
+int isMemberRec(Node root,int elem);
+void deleteItera(Node* root, int elem);
+void deleteAll(Node* root);
+
+//BST Traversals
 void preOrder(Node root);
 void inOrder(Node root);
 void postOrder(Node root);
-int isMember(Node root, int elem);
-int isMemberRec(Node root, int elem);
-void delete(Node* root, int elem);
 
 /**
  *            Tree illustration:
@@ -33,19 +37,18 @@ void delete(Node* root, int elem);
 
 int main(){
     Node root;
-    initTree(&root);
+    INITIALIZE(&root);
 
-    //insert recursive version
-    insertRec(&root, 10);
-    insertRec(&root, 3);
-    insertRec(&root, 13);
-    insertRec(&root, 1);
-    insertRec(&root, 5);
-    insertRec(&root, 11);
-    insertRec(&root, 20);
-    insertRec(&root, 4);
-    insertRec(&root, 15);
-    insertRec(&root, 14);
+    insertItera(&root, 10);
+    insertItera(&root, 3);
+    insertItera(&root, 13);
+    insertItera(&root, 1);
+    insertItera(&root, 5);
+    insertItera(&root, 11);
+    insertItera(&root, 20);
+    insertItera(&root, 4);
+    insertItera(&root, 15);
+    insertItera(&root, 14);
 
     printf("preOrder:\t");
     preOrder(root);
@@ -57,18 +60,18 @@ int main(){
     postOrder(root);
     printf("\n\n");
 
-    printf("isMember(2): %s\n", isMember(root,2)? "True":"False");
-    printf("isMember(11): %s\n", isMember(root,11)? "True":"False");
+    printf("isMember(2): %s\n", isMemberRec(root,2)? "True":"False");
+    printf("isMember(11): %s\n", isMemberRec(root,11)? "True":"False");
     printf("\n\n");
 
     // printf("delete 4: \n"); // no child
-    // delete(&root, 4);
+    // deleteItera(&root, 4);
 
     // printf("delete 15: \n"); // 1 child
-    // delete(&root, 15);
+    // deleteItera(&root, 15);
 
     printf("delete 3: \n"); // 2 child
-    delete(&root, 3);
+    deleteItera(&root, 10);
 
     printf("preOrder:\t");
     preOrder(root);
@@ -80,117 +83,118 @@ int main(){
     postOrder(root);
     printf("\n\n");
 
+    deleteAll(&root);
 
     return 0;
 }
 
-// difficulty - very easy
-void initTree(Node* root){
+void INITIALIZE(Node* root){
     *root = NULL;
 }
 
-void insert(Node* root, int elem){
+void insertItera(Node* root, int elem){
     Node* trav,temp;
-    for(trav = root;*trav != NULL; trav = (elem <(*trav)->elem)? &(*trav)->LC:&(*trav)->RC){}
+    for(trav = root; *trav != NULL; trav = (elem< (*trav)->data)? &(*trav)->LC:&(*trav)->RC){}
     temp = (Node)malloc(sizeof(struct node));
     if(temp != NULL){
-        temp->elem = elem;
+        temp->data = elem;
         temp->LC = temp->RC = NULL;
         *trav = temp;
     }
 }
 
-// recursive version, difficulty - medium
 void insertRec(Node* root, int elem){
     if(*root == NULL){
         Node temp = (Node)malloc(sizeof(struct node));
         if(temp != NULL){
-            temp->elem = elem;
+            temp->data = elem;
             temp->LC = temp->RC = NULL;
             *root = temp;
         }
-    }else if (elem < (*root)->elem){
+    }else if(elem < (*root)->data){
         insertRec(&(*root)->LC,elem);
     }else{
         insertRec(&(*root)->RC,elem);
     }
 }
 
-// recursive version, difficulty - easy
+int isMemberItera(Node root,int elem){
+    Node trav;
+    for(trav = root; trav != NULL && trav->data != elem; trav = (elem< trav->data)? trav->LC:trav->RC){}
+
+    return (trav != NULL)? 1:0;
+}
+
+int isMemberRec(Node root, int elem) {
+    int found = 0;
+    if (root != NULL) {
+        if (root->data == elem) {
+            found = 1;
+        } else if (elem < root->data) {
+            found = isMemberRec(root->LC, elem);
+        } else {
+            found = isMemberRec(root->RC, elem);
+        }
+    }
+    return found;
+}
+
+void deleteItera(Node* root, int elem){
+    Node* trav, temp;
+    for(trav = root; *trav != NULL && (*trav)->data != elem;){
+        trav = (elem < (*trav)->data)? &(*trav)->LC:&(*trav)->RC;
+    }
+
+    if(*trav != NULL){
+        Node* min;
+        if((*trav)->LC != NULL && (*trav)->RC != NULL){
+            for(min = &(*trav)->LC; (*min)->RC != NULL; min = &(*min)->RC){}
+            (*trav)->data = (*min)->data;
+            temp = (*min);
+            (*min) = (*min)->LC;
+        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){
+            temp = *trav;
+            *trav = NULL;
+        }else{
+            temp = *trav;
+            *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
+        }
+
+        free(temp);
+    }
+}
+
+// Notice how the traversal is similar to postOrder
+void deleteAll(Node* root) {
+    if (*root != NULL) {
+        deleteAll(&(*root)->LC); 
+        deleteAll(&(*root)->RC); 
+        free(*root);             
+        *root = NULL;           
+    }
+}
+ 
+// Traversal
 void preOrder(Node root){
     if(root != NULL){
-        printf("%d ",root->elem);
+        printf("%d ",root->data);
         preOrder(root->LC);
         preOrder(root->RC);
     }
 }
 
-// recursive version, difficulty - easy
 void inOrder(Node root){
     if(root != NULL){
         inOrder(root->LC);
-        printf("%d ",root->elem);
+        printf("%d ",root->data);
         inOrder(root->RC);
     }
 }
 
-// recursive version, difficulty - easy
 void postOrder(Node root){
     if(root != NULL){
         postOrder(root->LC);
         postOrder(root->RC);
-        printf("%d ",root->elem);
-    }
-}
-
-// Iterative version, difficulty - easy
-int isMember(Node root, int elem){
-    Node trav;
-    for(trav = root; trav != NULL && trav->elem != elem;){
-        trav = (elem < trav->elem)? trav->LC:trav->RC;
-    }
-
-    return (trav != NULL)? 1:0;
-}
-
-// Recursive version, difficulty easy - medium
-int isMemberRec(Node root, int elem) {
-    if (root == NULL) {
-        return 0;
-    }
-    if (root->elem == elem) {
-        return 1;
-    }
-    if (elem < root->elem) {
-        return isMember(root->LC, elem);
-    } else {
-        return isMember(root->RC, elem);
-    }
-}
-
-// iterative version, difficulty - medium to hard
-void delete(Node* root, int elem){
-    Node *trav,temp;
-
-    for(trav = root; *trav != NULL && (*trav)->elem != elem;){
-        trav = (elem < (*trav)->elem)? &(*trav)->LC:&(*trav)->RC;
-    }
-
-    if(*trav != NULL){
-        Node* minNode;
-        if((*trav)->LC != NULL && (*trav)->RC != NULL){ // 2 childs
-            for(minNode = &(*trav)->LC; (*minNode)->RC != NULL; minNode = &(*minNode)->RC){}
-            (*trav)->elem = (*minNode)->elem;
-            temp = *minNode;
-            *minNode = NULL;
-        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){ // 0 child
-            temp = *trav;
-            *trav = NULL;
-        }else{ // 1 child
-            temp = *trav;
-            *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
-        }
-
-        free(temp);   
+        printf("%d ",root->data);
     }
 }
