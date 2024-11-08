@@ -14,6 +14,7 @@ void INSERT(POT* heap, int elem);
 void POPULATE(POT* heap,int data[],int size);
 void HEAPIFYALL(POT* heap);
 void HEAPIFYSUBTREE(POT* heap, int index);
+void DELETEMAX(POT* heap);
 
 int main(){
     POT heap;
@@ -25,10 +26,10 @@ int main(){
     HEAPIFYALL(&heap);
     DISPLAY(heap);
     
-    // //deleteMin
-    // printf("DeleteMin:\n");
-    // DELETEMAX(&heap);
-    // DISPLAY(heap);
+    //deleteMin
+    printf("DeleteMin:\n");
+    DELETEMAX(&heap);
+    DISPLAY(heap);
 
     return 0;
 }
@@ -47,6 +48,15 @@ void POPULATE(POT* heap,int data[],int size){
     int i;
     for(i = 0; i<size;i++){
         INSERT(heap,data[i]);
+    }
+}
+
+void DELETEMAX(POT* heap){
+    if(heap->lastNdx != -1){
+        int temp = heap->List[0];
+        heap->List[0] = heap->List[heap->lastNdx];
+        heap->List[heap->lastNdx--] = temp;
+        HEAPIFYSUBTREE(heap,0);
     }
 }
 
@@ -83,6 +93,7 @@ void HEAPIFYSUBTREE(POT* heap, int index){
         }
     }
 }
+
 
 void DISPLAY(POT heap){
     if (heap.lastNdx != -1){
