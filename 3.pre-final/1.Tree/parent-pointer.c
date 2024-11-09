@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 10
-#define ROOT  -1
-#define NO_CHILD  -2
+#define ROOT -1
+#define NO_CHILD -2
 
 typedef int tree[MAX];
 
 tree* initTree();
-void insert(int elem,int parent,tree* T); // elemenent to insert, the parent, reference to the tree
+void insert(int elem,int parent,tree* T);
 void display(tree T);
-int PARENT(int n, tree T);
-int LEFTMOST_CHILD(int n, tree T);
-int RIGHT_SIBLING(int n, tree T);
+int PARENT(int child,tree T);
+int LEFTMOST_CHILD(int node,tree T);
+int RIGHT_SIBLING(int node,tree T);
 int Root(tree T);
 void MAKENULL(tree* T);
 
 int main(){
-    // system("cls");
     system("clear");
     tree* T = initTree();
     insert(5,ROOT,T);
@@ -60,19 +60,18 @@ int main(){
 
 tree* initTree(){
     tree* temp = (tree*)malloc(sizeof(tree));
-    if(temp != NULL){
+    if(temp!= NULL){
         int i;
         for(i=0;i<MAX;i++){
             (*temp)[i] = NO_CHILD;
         }
     }
-
     return temp;
 }
 
 void insert(int elem,int parent,tree* T){
-    if(elem < MAX && elem>=0 && parent >=-1 && parent < MAX){
-        if((*T)[elem] == NO_CHILD){
+    if(elem < MAX && elem >= 0 && parent < MAX && parent >= -1){
+        if ((*T)[elem] == NO_CHILD){
             (*T)[elem] = parent;
         }else{
             printf("Parent already in place\n\n");
@@ -81,51 +80,48 @@ void insert(int elem,int parent,tree* T){
 }
 
 void display(tree T){
+    printf("%-10s%-10s\n","CHILD","PARENT");
     int i;
-    printf("%-10s%-10s\n","child","parent");
     for(i=0;i<MAX;i++){
         printf("%-10d%-10d\n",i,T[i]);
     }
 }
 
-int PARENT(int n, tree T){
-    return(T[n] != -2)? T[n]:-2;
+int PARENT(int child,tree T){
+    return(T[child] != NO_CHILD)? T[child]:NO_CHILD;
 }
 
-int LEFTMOST_CHILD(int n, tree T){
+int LEFTMOST_CHILD(int node,tree T){
     int i;
-    for(i = 0; i <MAX && n != T[i]; i++){}
+    for(i=0;i<MAX&& node != T[i];i++){}
 
-    return (i< MAX)? i:-2;
+    return(i<MAX)? i:NO_CHILD;
 }
 
-int RIGHT_SIBLING(int n, tree T){
+int RIGHT_SIBLING(int node,tree T){
     int i;
-    int r = -2; // Initialize the right sibling to NO_CHILD
-    int p = T[n]; // Get the parent of the node n
-    int ctr = 0; // Counter to ensure we only find the first right sibling
+    int p = T[node]; // Get the parent of the node
+    int rightSibling = NO_CHILD; // Initialize right sibling to NO_CHILD
 
-    for(i = 0; i < MAX; i++){
-        // Check if the current node has the same parent and a higher index than n
-        if(T[i] == p && i > n && ctr == 0){
-            r = i; // Set the right sibling to the current node
-            ctr++; // Increment the counter to ensure only the first right sibling is found
+    for (i = 0; i < MAX; i++) {
+        // Check if the current node has the same parent and a higher index than the given node
+        if (T[i] == p && i > node && rightSibling == NO_CHILD) {
+            rightSibling = i; // Set the right sibling
         }
-    } 
+    }
 
-    return r; // Return the right sibling
+    return rightSibling;
 }
 
 int Root(tree T){
     int i;
-    for(i=0;i<MAX && T[i] != -1;i++){}
+    for(i=0;i<MAX&&T[i] != ROOT;i++){}
 
-    return (i<MAX)? i:-2;
+    return(i<MAX)? i:NO_CHILD;
 }
 
-
 void MAKENULL(tree* T){
-    int i; 
+    int i;
     for(i=0;i<MAX;i++){
         (*T)[i] = NO_CHILD;
     }
