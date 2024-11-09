@@ -34,95 +34,8 @@ int main(){
     return 0;
 }
 
-
 void init(POT* heap){
     heap->lastNdx = -1;
-}
-
-//insert then heapify
-void insert(POT* heap, int elem){
-    if(heap->lastNdx <MAX-1){
-        heap->tree[++heap->lastNdx] = elem;
-
-        int idx;
-        for(idx = heap->lastNdx; idx>=0&& heap->tree[idx] < heap->tree[(idx-1)/2];idx = (idx-1)/2){
-            int temp = heap->tree[idx];
-            heap->tree[idx] = heap->tree[(idx-1)/2];
-            heap->tree[(idx-1)/2] = temp;
-        }
-    }
-}
-
-void populate(POT* heap,int data[],int size){
-    int i;
-    for(i=0;i<size;i++){
-        insert(heap,data[i]);
-    }
-}
-
-int deleteMin(POT *heap){
-    if(heap->lastNdx != -1){
-        int deletedElem = heap->tree[0];
-        heap->tree[0] = heap->tree[heap->lastNdx];
-        heap->lastNdx--;
-        heapifyV2(heap,0);
-        return deletedElem;
-    }
-}
-
-void heapiftyAll(POT* heap){
-    int i;
-    for(i = (heap->lastNdx-1)/2;i>=0;i--){
-        heapifyV2(heap,i);
-    }
-}
-
-void heapify(POT* heap,int parent){
-    int small = parent;
-    int LChild = parent*2+1;
-    int RChild = parent*2+2;
-
-    if(LChild <= heap->lastNdx && heap->tree[LChild] < heap->tree[small]){
-        small = LChild;
-    }
-
-    if(RChild <= heap->lastNdx && heap->tree[RChild] < heap->tree[small]){
-        small = RChild;
-    }
-
-    if(small != parent){
-        int temp = heap->tree[parent];
-        heap->tree[parent] = heap->tree[small];
-        heap->tree[small] = temp;
-        heapify(heap,small);
-    }
-}
-
-void heapifyV2(POT* heap,int parent){
-    int small,LC,RC;
-    int flag = 0;
-
-    while(!flag){
-        small = parent;
-        LC = parent*2+1;
-        RC = LC+1;
-        if(LC <= heap->lastNdx && heap->tree[LC] < heap->tree[small]){
-            small = LC;
-        }
-
-        if(RC <= heap->lastNdx && heap->tree[RC] < heap->tree[small]){
-            small = RC;
-        }
-
-        if(small != parent){
-            int temp = heap->tree[small];
-            heap->tree[small] = heap->tree[parent];
-            heap->tree[parent] = temp;
-            parent = small;
-        }else{
-            flag = 1;
-        }
-    }
 }
 
 void display(POT heap){
@@ -137,4 +50,91 @@ void display(POT heap){
     }
 
     printf("\n\n");
+}
+
+void insert(POT* heap, int elem){
+    if(heap->lastNdx < MAX -1){
+        heap->tree[++heap->lastNdx] = elem;
+
+        int idx;
+        for(idx = heap->lastNdx; idx>=0 && heap->tree[idx] < heap->tree[(idx-1)/2]; idx = (idx-1)/2){
+            int temp = heap->tree[idx];
+            heap->tree[idx] = heap->tree[(idx-1)/2];
+            heap->tree[(idx-1)/2] = temp;
+        }
+    }
+}
+
+void populate(POT* heap,int data[],int size){
+    int i;
+    for(i=0;i<size;i++){
+        insert(heap,data[i]);
+    }
+}
+
+void heapiftyAll(POT* heap){
+    int lastNdx = heap->lastNdx;
+    int i;
+    for(i=(lastNdx-1)/2;i>0;i--){
+        heapify(heap,i);
+    }
+}
+
+void heapify(POT* heap,int parent){
+    int small = parent;
+    int LC = parent*2+1;
+    int RC = LC+1;
+
+    if(LC <= heap->lastNdx && heap->tree[LC]< heap->tree[small]){
+        small = LC;
+    }
+
+    if(RC <= heap->lastNdx && heap->tree[RC]< heap->tree[small]){
+        small = RC;
+    }
+
+    if(small != parent){
+        int temp = heap->tree[small];
+        heap->tree[small] = heap->tree[parent];
+        heap->tree[parent] = temp;
+        heapify(heap,small);
+    }
+}
+
+void heapifyV2(POT* heap,int parent){
+    int small,LC,RC,flag = 0;
+
+    while(!flag){
+        int small = parent;
+        int LC = parent*2+1;
+        int RC = LC+1;
+
+        if(LC <= heap->lastNdx && heap->tree[LC]< heap->tree[small]){
+            small = LC;
+        }
+
+        if(RC <= heap->lastNdx && heap->tree[RC]< heap->tree[small]){
+            small = RC;
+        }
+
+        if(small != parent){
+            int temp = heap->tree[small];
+            heap->tree[small] = heap->tree[parent];
+            heap->tree[parent] = temp;  
+            parent = small;
+        }else{
+            flag = 1;
+        }
+    }
+}
+
+int deleteMin(POT *heap){
+    if(heap->lastNdx != -1){
+        int deleteElem = heap->tree[0];
+        heap->tree[0] = heap->tree[heap->lastNdx];
+        heap->tree[heap->lastNdx--] = deleteElem;
+
+        heapify(heap,0);
+        return deleteElem;
+    }
 }
