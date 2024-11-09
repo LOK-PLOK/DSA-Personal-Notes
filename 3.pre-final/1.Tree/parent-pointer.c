@@ -101,18 +101,19 @@ int LEFTMOST_CHILD(int n, tree T){
 
 int RIGHT_SIBLING(int n, tree T){
     int i;
-    int r = -2;
-    int p = T[n];
-    int ctr = 0;
+    int r = -2; // Initialize the right sibling to NO_CHILD
+    int p = T[n]; // Get the parent of the node n
+    int ctr = 0; // Counter to ensure we only find the first right sibling
 
-    for(i = 0;i<MAX;i++){
-        if(T[i] == p && i>n && ctr == 0){
-            r = i;
-            ctr++;
+    for(i = 0; i < MAX; i++){
+        // Check if the current node has the same parent and a higher index than n
+        if(T[i] == p && i > n && ctr == 0){
+            r = i; // Set the right sibling to the current node
+            ctr++; // Increment the counter to ensure only the first right sibling is found
         }
     } 
 
-    return r;
+    return r; // Return the right sibling
 }
 
 int Root(tree T){
@@ -121,6 +122,7 @@ int Root(tree T){
 
     return (i<MAX)? i:-2;
 }
+
 
 void MAKENULL(tree* T){
     int i; 
