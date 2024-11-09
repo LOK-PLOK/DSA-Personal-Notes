@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 typedef struct node{
     int data;
     struct node* LC;
@@ -71,7 +72,7 @@ int main(){
     // deleteItera(&root, 15);
 
     printf("delete 3: \n"); // 2 child
-    deleteItera(&root, 10);
+    deleteItera(&root, 3);
 
     printf("preOrder:\t");
     preOrder(root);
@@ -93,8 +94,8 @@ void INITIALIZE(Node* root){
 }
 
 void insertItera(Node* root, int elem){
-    Node* trav,temp;
-    for(trav = root; *trav != NULL; trav = (elem< (*trav)->data)? &(*trav)->LC:&(*trav)->RC){}
+    Node *trav, temp;
+    for(trav = root; *trav != NULL; trav = (elem < (*trav)->data)? &(*trav)->LC:&(*trav)->RC){}
     temp = (Node)malloc(sizeof(struct node));
     if(temp != NULL){
         temp->data = elem;
@@ -107,9 +108,9 @@ void insertRec(Node* root, int elem){
     if(*root == NULL){
         Node temp = (Node)malloc(sizeof(struct node));
         if(temp != NULL){
-            temp->data = elem;
-            temp->LC = temp->RC = NULL;
-            *root = temp;
+        temp->data = elem;
+        temp->LC = temp->RC = NULL;
+        *root = temp;
         }
     }else if(elem < (*root)->data){
         insertRec(&(*root)->LC,elem);
@@ -120,42 +121,40 @@ void insertRec(Node* root, int elem){
 
 int isMemberItera(Node root,int elem){
     Node trav;
-    for(trav = root; trav != NULL && trav->data != elem; trav = (elem< trav->data)? trav->LC:trav->RC){}
+    for(trav = root; trav != NULL && trav->data != elem; trav = (elem < trav->data)? trav->LC:trav->RC){}
 
     return (trav != NULL)? 1:0;
 }
 
-int isMemberRec(Node root, int elem) {
-    int found = 0;
-    if (root != NULL) {
-        if (root->data == elem) {
-            found = 1;
-        } else if (elem < root->data) {
-            found = isMemberRec(root->LC, elem);
-        } else {
-            found = isMemberRec(root->RC, elem);
-        }
+int isMemberRec(Node root,int elem){
+    if(root == NULL){
+        return 0;
+    }else if(elem == root->data){
+        return 1;
+    }else if(elem < root->data){
+        isMemberRec(root->LC,elem);
+    }else{
+        isMemberRec(root->RC,elem);
     }
-    return found;
 }
 
 void deleteItera(Node* root, int elem){
     Node* trav, temp;
-    for(trav = root; *trav != NULL && (*trav)->data != elem;){
-        trav = (elem < (*trav)->data)? &(*trav)->LC:&(*trav)->RC;
+    for(trav = root; *trav != NULL&& (*trav)->data != elem;){
+        trav = (elem<(*trav)->data)? &(*trav)->LC:&(*trav)->RC;
     }
 
     if(*trav != NULL){
         Node* min;
-        if((*trav)->LC != NULL && (*trav)->RC != NULL){
+        if((*trav)->LC != NULL && (*trav)->RC != NULL){ // 2 child
             for(min = &(*trav)->LC; (*min)->RC != NULL; min = &(*min)->RC){}
             (*trav)->data = (*min)->data;
-            temp = (*min);
-            (*min) = (*min)->LC;
-        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){
+            temp = *min;
+            *min = (*min)->LC;
+        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){// 0 child
             temp = *trav;
             *trav = NULL;
-        }else{
+        }else{// 1 child
             temp = *trav;
             *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
         }
@@ -164,17 +163,15 @@ void deleteItera(Node* root, int elem){
     }
 }
 
-// Notice how the traversal is similar to postOrder
-void deleteAll(Node* root) {
-    if (*root != NULL) {
-        deleteAll(&(*root)->LC); 
-        deleteAll(&(*root)->RC); 
-        free(*root);             
-        *root = NULL;           
+void deleteAll(Node* root){
+    if(*root != NULL){
+        deleteAll(&(*root)->LC);
+        deleteAll(&(*root)->RC);
+        free(*root);
+        *root = NULL;
     }
 }
- 
-// Traversal
+
 void preOrder(Node root){
     if(root != NULL){
         printf("%d ",root->data);
