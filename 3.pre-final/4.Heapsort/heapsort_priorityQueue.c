@@ -107,7 +107,7 @@ void heapiftyAllMax(POT* heap){
     int i;
     int lastNdx = heap->lastNdx;
     for(i = (lastNdx-1)/2;i>=0;i--){
-        heapifyMin(heap,i);
+        heapifyMax(heap,i);
     }
 }
 
