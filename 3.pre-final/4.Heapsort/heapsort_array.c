@@ -2,56 +2,72 @@
 #include <stdlib.h>
 #define MAX 10
 
-void display(int data[], int size);
-void heapifyAllMin(int data[], int size);
-void heapifyAllMax(int data[], int size);
-void heapifySubtreeMin(int data[], int lastNdx, int parent);
-void heapifySubtreeMax(int data[], int lastNdx, int parent);
-void heapsortMin(int data[], int size);
-void heapsortMax(int data[], int size);
+void display(int data[],int size);
+void heapifyAllMin(int data[],int size);
+void heapifyAllMax(int data[],int size);
+void heapifySubTreeMin(int data[],int lastNdx,int parent);
+void heapifySubTreeMax(int data[],int lastNdx,int parent);
+void heapsortMin(int data[],int size);
+void heapsortMax(int data[],int size);
 
-int main() {
+int main(){
     system("clear");
-    int data[] = {61, 10, 30, 1, 8, 25, 30, 0, 100, 55};
-    int size = sizeof(data) / sizeof(data[0]);
-    display(data, size);
+    int data1[] = {61,10,30,1,8,25,30,0,100,55};
+    int data2[] = {61,10,30,1,8,25,30,0,100,55};
+    int size1 = sizeof(data1)/sizeof(data1[0]);
+    int size2 = sizeof(data1)/sizeof(data1[0]);
+    printf("Data1: ");
+    display(data1,size1);
 
-    // Heapsort Min
-    printf("HeapSortMin: ");
-    heapsortMin(data, size);
-    display(data, size);
+    printf("Data2: ");
+    display(data2,size2);
 
-    // Reset data for heapsortMax
-    int data2[] = {61, 10, 30, 1, 8, 25, 30, 0, 100, 55};
-    printf("HeapSortMax: ");
-    heapsortMax(data2, size);
-    display(data2, size);
 
+    printf("Heapsort Data1 (Min): ");
+    heapsortMin(data1,size1);
+    display(data1,size1);
+
+    printf("Heapsort Data2 (Max): ");
+    heapsortMax(data2,size2);
+    display(data2,size2);
     return 0;
 }
 
-void heapifyAllMin(int data[], int size){
-    int lastNdx = size-1;
+void display(int data[],int size){
+    if(size != 0){
+        int i;
+        for(i=0;i<size;i++){
+            printf("%d ",data[i]);
+        }
+    }else{
+        printf("EMPTY");
+    }
+
+    printf("\n\n");
+}
+
+void heapifyAllMin(int data[],int size){
     int i;
-    for(i=(lastNdx-1)/2; i>=0; i--){
-        heapifySubtreeMin(data,lastNdx,i);
+    int lastNdx = size-1;
+    for(i=(lastNdx-1)/2;i>=0;i--){
+        heapifySubTreeMin(data,lastNdx,i);
     }
 }
 
-void heapifyAllMax(int data[], int size){
-    int lastNdx = size-1;
+void heapifyAllMax(int data[],int size){
     int i;
-    for(i=(lastNdx-1)/2; i>=0; i--){
-        heapifySubtreeMax(data,lastNdx,i);
+    int lastNdx = size-1;
+    for(i=(lastNdx-1)/2;i>=0;i--){
+        heapifySubTreeMax(data,lastNdx,i);
     }
 }
 
-void heapifySubtreeMin(int data[], int lastNdx, int parent){
-    int small,LC,RC,flag=0;
+void heapifySubTreeMin(int data[],int lastNdx,int parent){
+    int small,LC,RC,flag = 0;
 
     while(!flag){
         small = parent;
-        LC = parent*2+1;
+        LC = parent * 2 + 1;
         RC = LC + 1;
 
         if(LC <= lastNdx && data[LC] < data[small]){
@@ -73,12 +89,12 @@ void heapifySubtreeMin(int data[], int lastNdx, int parent){
     }
 }
 
-void heapifySubtreeMax(int data[], int lastNdx, int parent){
-    int large,LC,RC,flag=0;
+void heapifySubTreeMax(int data[],int lastNdx,int parent){
+    int large,LC,RC,flag = 0;
 
     while(!flag){
         large = parent;
-        LC = parent*2+1;
+        LC = parent * 2 + 1;
         RC = LC + 1;
 
         if(LC <= lastNdx && data[LC] > data[large]){
@@ -100,49 +116,32 @@ void heapifySubtreeMax(int data[], int lastNdx, int parent){
     }
 }
 
-void heapsortMin(int data[], int size){
+void heapsortMin(int data[],int size){
     int i;
     int lastNdx = size-1;
-
     for(i=(lastNdx-1)/2;i>=0;i--){
-        heapifyAllMin(data,size);
+        heapifySubTreeMin(data,lastNdx,i);
     }
-
-    for(i=lastNdx;i>0;i--){
+    for(i = lastNdx;i>0;i--){
         int temp = data[0];
         data[0] = data[i];
         data[i] = temp;
-
         lastNdx--;
-        heapifySubtreeMin(data,lastNdx,0);
+        heapifySubTreeMin(data,lastNdx,0);
     }
 }
 
-void heapsortMax(int data[], int size){
+void heapsortMax(int data[],int size){
     int i;
     int lastNdx = size-1;
-
     for(i=(lastNdx-1)/2;i>=0;i--){
-        heapifyAllMax(data,size);
+        heapifySubTreeMax(data,lastNdx,i);
     }
-
-    for(i=lastNdx;i>0;i--){
+    for(i = lastNdx;i>0;i--){
         int temp = data[0];
         data[0] = data[i];
         data[i] = temp;
-
         lastNdx--;
-        heapifySubtreeMax(data,lastNdx,0);
+        heapifySubTreeMax(data,lastNdx,0);
     }
-}
-
-void display(int data[], int size) {
-    if (size != 0) {
-        for (int i = 0; i < size; i++) {
-            printf("%d ", data[i]);
-        }
-    } else {
-        printf("EMPTY");
-    }
-    printf("\n\n");
 }
