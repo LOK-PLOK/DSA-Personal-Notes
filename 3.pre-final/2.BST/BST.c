@@ -151,9 +151,6 @@ void deleteItera(Node* root, int elem){
             (*trav)->data = (*min)->data;
             temp = *min;
             *min = (*min)->LC;
-        }else if((*trav)->LC == NULL && (*trav)->RC == NULL){// 0 child
-            temp = *trav;
-            *trav = NULL;
         }else{// 1 child
             temp = *trav;
             *trav = ((*trav)->LC != NULL)? (*trav)->LC:(*trav)->RC;
