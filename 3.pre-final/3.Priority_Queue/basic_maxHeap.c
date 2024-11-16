@@ -12,9 +12,9 @@ void init(POT* heap);
 void display(POT heap);
 void insert(POT* heap, int elem);
 void populate(POT* heap,int data[],int size);
-void heapiftyAll(POT* heap);
-void heapify(POT* heap,int parent);
-void heapifyV2(POT* heap,int parent);
+void heapify(POT* heap);
+void heapifySubTree(POT* heap,int parent);
+void heapifySubTreeV2(POT* heap,int parent);
 int deleteMax(POT *heap);
 
 int main(){
@@ -72,15 +72,15 @@ void populate(POT* heap,int data[],int size){
     }
 }
 
-void heapiftyAll(POT* heap){
+void heapify(POT* heap){
     int lastNdx = heap->lastNdx;
     int i;
     for(i=(lastNdx-1)/2;i>0;i--){
-        heapify(heap,i);
+        heapifySubTree(heap,i);
     }
 }
 
-void heapify(POT* heap,int parent){
+void heapifySubTree(POT* heap,int parent){
     int large = parent;
     int LC = parent*2+1;
     int RC = LC + 1;
@@ -97,11 +97,11 @@ void heapify(POT* heap,int parent){
         int temp = heap->tree[large];
         heap->tree[large] = heap->tree[parent];
         heap->tree[parent] = temp;
-        heapify(heap,large);
+        heapifySubTree(heap,large);
     }
 }
 
-void heapifyV2(POT* heap,int parent){
+void heapifySubTreeV2(POT* heap,int parent){
     int large,LC,RC,flag = 0;
     
     while(!flag){
@@ -134,7 +134,7 @@ int deleteMax(POT *heap){
         heap->tree[0] = heap->tree[heap->lastNdx];
         heap->tree[heap->lastNdx--] = deleteElem;
 
-        heapify(heap,0);
+        heapifySubTree(heap,0);
         return deleteElem;
     }
 }
