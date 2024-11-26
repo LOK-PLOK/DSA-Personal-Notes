@@ -4,7 +4,7 @@
 #define VERTEX_SIZE 6
 #define SENTINEL INT_MAX
 
-typedef char vertexType; 
+typedef char vertexType;  // 'A','B','C','D','E','F'
 typedef int labelType;
 
 typedef struct {
@@ -23,15 +23,16 @@ typedef struct adjNode{
     struct adjNode* link;
 }*AdjList;
 
-
+/**Labeled Adjacency List */
 typedef struct {
     AdjList head[VERTEX_SIZE];  
     int edgeCount;
 }directedAdjList;
 
+/**Labeled Adjacency Matrix */
 typedef struct{
-    labelType matrix[VERTEX_SIZE][VERTEX_SIZE];
-    int edgeCount;
+    labelType matrix[VERTEX_SIZE][VERTEX_SIZE]; /* Vertices adjacent to Vertex A are stored at index 0, Vertex B at index 1, etc*/
+    int edgeCount;  /*Total number of edges in the graph */
 }labeledAdjMatrix;
 
 #endif
