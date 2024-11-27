@@ -45,6 +45,7 @@ void dfs(AdjMatrix G,int index,Set visited){
      * start from the given index and go further to its vertices that is connected
      * Note: this is Undirected Graph and Adjacency Matrix(values are 0 or 1)
      * 
+     * remember to display for checking
      */
 }
 
