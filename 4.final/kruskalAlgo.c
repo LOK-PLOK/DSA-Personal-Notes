@@ -119,6 +119,12 @@ void displayEdgeList(edgeList list){
     }
     puts("");
 }
+/**
+ * Given the labeled adjacency matrix of an undirected graph, function MST_kruskal() will create a list of edges with the minimum cost of the undirected graph.
+ * Newly created list will be returned to the calling function.
+ * 
+ * write the code of function createEdgeList()
+ */
 
 MST MST_kruskal(LabelAdjMat M){
     MST kruskal = {.count = 0,.cost = 0};
