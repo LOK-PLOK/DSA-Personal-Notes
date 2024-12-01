@@ -10,12 +10,12 @@ int main(){
     initLabelAdjList(&List);
 
     int graphUndirected[MAXV][MAXV] = {
-        {x,1,0,1,0,1},
-        {1,x,0,0,1,0},
-        {0,0,x,1,1,0},
-        {1,0,1,x,0,1},
-        {0,1,1,0,x,0},
-        {1,0,0,1,0,x}
+        {INF,1,0,1,0,1},
+        {1,INF,0,0,1,0},
+        {0,0,INF,1,1,0},
+        {1,0,1,INF,0,1},
+        {0,1,1,0,INF,0},
+        {1,0,0,1,0,INF}
     };
 
     insertToAdjList(&List,graphUndirected,MAXV);
@@ -51,7 +51,7 @@ void insertToAdjList(AdjListLL* List,int data[][MAXV],int size){
     for(row = 0; row < size; row++){
         //loop 2
         for(col = 0; col < size; col++){
-            if(data[row][col] != 0 && data[row][col] != x){
+            if(data[row][col] != 0 && data[row][col] != INF){
                 insert(List,row,col);
             }
         }

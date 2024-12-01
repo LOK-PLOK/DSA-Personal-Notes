@@ -23,7 +23,7 @@ void initAdjMatrix(Adj_M Matrix){
     int row,col;
     for(row = 0; row<MAXV; row++){
         for(col = 0; col < MAXV; col++){
-            (row == col)? (Matrix[row][col] = x):(Matrix[row][col] = 0);
+            (row == col)? (Matrix[row][col] = INF):(Matrix[row][col] = 0);
         }
     }
 }
@@ -43,7 +43,7 @@ void displayAdjMatrix(Adj_M Matrix){
     for(row=0;row <MAXV;row++){
         printf("%d | ",row);
         for(col = 0; col <MAXV;col++){
-            if(Matrix[row][col] != x){
+            if(Matrix[row][col] != INF){
                 printf("%d ",Matrix[row][col]);
             }else{
                 printf("%s ","X");
