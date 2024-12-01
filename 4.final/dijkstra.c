@@ -54,7 +54,9 @@ int* dijkstra(int G[MAXV][MAXV], int start) {
 
             // Update distances to adjacent vertices
             for (int i = 0; i < MAXV; i++) {
-                D[i] = (D[minIndex] + G[minIndex][i] < D[i])? (D[minIndex] + G[minIndex][i]):D[i];
+                if(D[minIndex] + G[minIndex][i] < D[i]){
+                    D[i] = D[minIndex] + G[minIndex][i] ;
+                }
             }
         }
     }
