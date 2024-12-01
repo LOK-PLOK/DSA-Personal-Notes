@@ -5,9 +5,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAXV 6
+// change the MAXV to 5 when using dijkstras algo
+#define MAXV 5
 #define MAXList 10
-#define x 999
+#define INF 999
+
+typedef enum {FALSE,TRUE}Boolean;
+typedef enum {visited,unvisited}Visited;
 
 // structure definition for Graph Adjacency Matrix representation
 typedef int Adj_M[MAXV][MAXV];
