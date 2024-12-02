@@ -6,8 +6,9 @@
 #include <stdbool.h>
 
 // change the MAXV to 5 when using dijkstras algo and 7 for DFS
-#define MAXV 7
+#define MAXV 6
 #define MAXList 10
+#define MAXE 30
 #define INF 999
 
 typedef enum {FALSE,TRUE}Boolean;
