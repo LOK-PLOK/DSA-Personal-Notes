@@ -64,6 +64,44 @@ int* dijkstra(int G[MAXV][MAXV], int start) {
     return D;
 }
 
+int* dijkstraCompWord(int G[MAXV][MAXV], int start) {
+    int* D = (int*)malloc(MAXV * sizeof(int));
+    unsigned int S = 0;
+
+    // Initialize distances
+    for (int i = 0; i < MAXV; i++) {
+        D[i] = G[start][i];
+    }
+    D[start] = 0;
+
+    // Main loop: Find shortest paths
+    for (int remainingVertices = 0; remainingVertices < MAXV; remainingVertices++) {
+        // Find the vertex with the minimum distance
+        int min = INF;
+        int minIndex = -1;
+        for (int i = 0; i < MAXV; i++) {
+            if ((S & (1<<i)) == FALSE && D[i] < min) {
+                min = D[i];
+                minIndex = i;
+            }
+        }
+
+        // If no unvisited vertex is found, all reachable vertices have been processed
+        if (minIndex != -1) {
+            S|= (1<<minIndex);
+
+            // Update distances to adjacent vertices
+            for (int i = 0; i < MAXV; i++) {
+                if(D[minIndex] + G[minIndex][i] < D[i]){
+                    D[i] = D[minIndex] + G[minIndex][i] ;
+                }
+            }
+        }
+    }
+
+    return D;
+}
+
 void displayLabelAdj(labelAdj_M G) {
     int row, col;
     puts("");
