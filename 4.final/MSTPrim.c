@@ -8,7 +8,7 @@ typedef struct{
 
 void displayAdjMatrix(labelAdj_M Matrix);
 void displayEdges(labelAdj_M Matrix);
-void MST_prim(labelAdj_M Matrix);
+MST MST_prim(labelAdj_M Matrix, int start);
 
 int main(){
     labelAdj_M G = {
@@ -20,61 +20,54 @@ int main(){
         {  5,   6, INF, INF,   3, INF},
     };
 
-    MST_prim(G);
+    MST prim = MST_prim(G, 0);
     displayAdjMatrix(G);
+    printf("\nTotal Cost: %d\n\n",prim.cost);
 }
 
 //important to add comments on what you are doing
 
-void MST_prim(labelAdj_M G){
-    // Initialize MST matrix with INF (indicating no edges)
-    labelAdj_M MST = {INF};
-    // Initialize edge count
-    int edgeNo = 0;
-    // Array to keep track of visited vertices
-    Boolean visit[MAXV] = {FALSE};
-    // Start with the first vertex
-    visit[0] = TRUE;
+MST MST_prim(labelAdj_M G, int start){
+    // Initialize MST
+    MST prim;
+    prim.cost = 0;
+    prim.count = 0;
 
-    int i, j, x, y;
-    // Loop until we have added MAXV-1 edges to the MST
-    while(edgeNo < MAXV - 1){
+    // initialize A component to mark FALSE => Not yet visited
+    Boolean visit[MAXV] = {FALSE};
+    visit[start] = TRUE; // initialize the starting vertices to TRUE
+    int edgeNo = 1;
+
+    int i,j,x,y;
+    //while no of edges is not yet = to the number of vertices
+    while(edgeNo < MAXV){
         int min = INF;
-        // x and y will store the coordinates of the least weighted edge
-        x = -1; // x is row 
-        y = -1; // y is col
-        // Iterate over all vertices
-        for(i = 0; i < MAXV ; i++){
-            // Check if the vertex is visited
+        x = -1; // x represents the row
+        y = -1; // y represents the column
+        //visiting every edges to find the most minimum weight
+        for(i = 0; i < MAXV; i++){
+            // edges on the visited vertices are checked
             if(visit[i] == TRUE){
-                // Iterate over all adjacent vertices
                 for(j = 0; j < MAXV; j++){
-                    // Check if the vertex is not visited and there is an edge
-                    if(visit[j] == FALSE && G[i][j] != INF){
-                        // Find the minimum weight edge
-                        if(min > G[i][j]){
-                            min = G[i][j];
-                            x = i;
-                            y = j;
-                        }
+                    // check if the vertice is not yet visited and check if its not infinity and if its the most minimum
+                    if(visit[j] == FALSE && G[i][j] != INF && min > G[i][j]){
+                        min = G[i][j];
+                        x = i;
+                        y = j;
                     }
                 }
             }
         }
-        // If a valid edge is found
+        //if y is change, we insert to the MST and add the cost, also set the visit at index y to visited
         if(y != -1){
-            // Add the edge to the MST
-            MST[x][y] = min;
-            MST[y][x] = min;
-            // Mark the vertex as visited
+            edgeTypeL temp = {y,x,min};
             visit[y] = TRUE;
-            // Increment the edge count
-            edgeNo++; 
+            prim.edges[prim.count++] = temp;
+            prim.cost+=min;
+            edgeNo++;
         }
     }
-
-    displayAdjMatrix(MST);
-    displayEdges(MST);
+    return prim;
 }
 
 void displayAdjMatrix(labelAdj_M Matrix){
