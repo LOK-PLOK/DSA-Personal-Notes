@@ -32,6 +32,7 @@ void displayHeap(minHeapOrList heap);
 edgeType deleteMin(minHeapOrList* heap);
 MST Kruskals(LabelAdjMat A);
 MST Prims(LabelAdjMat A, vertex startV);
+void insertMinHeap(minHeapOrList* heap, edgeType elem);
 
 int main(){
 	LabelAdjMat G = {
@@ -58,9 +59,9 @@ int main(){
 	puts("");
 	displayHeap(kruskal.eList);
 
-	// MST prim = Prims(G,0);
-	// puts("");
-	// displayHeap(prim.eList);
+	MST prim = Prims(G,0);
+	puts("");
+	displayHeap(prim.eList);
 } 
 
 minHeapOrList createMinHeap(LabelAdjMat G){
@@ -78,11 +79,28 @@ minHeapOrList createMinHeap(LabelAdjMat G){
 	}
 	
 	int LastNdx = heap.lastNdx;
-	for(idx = (LastNdx - 1)/2; idx> 0; idx--){
+	for(idx = (LastNdx - 1)/2; idx>= 0; idx--){
 		minHeapifySubtree(&heap,idx);
 	}
 	
 	return heap;
+}
+
+
+void insertMinHeap(minHeapOrList* heap, edgeType elem){
+    if(heap->lastNdx < MAX_SIZE-1){
+        // Insert at end
+        heap->edges[++heap->lastNdx] = elem;
+        
+        // Bubble up
+        int curr = heap->lastNdx;
+        while(curr > 0 && heap->edges[(curr-1)/2].weight > heap->edges[curr].weight){
+            edgeType temp = heap->edges[curr];
+            heap->edges[curr] = heap->edges[(curr-1)/2];
+            heap->edges[(curr-1)/2] = temp;
+            curr = (curr-1)/2;
+        }
+    }
 }
 
 void minHeapifySubtree(minHeapOrList* heap,int parent){
@@ -123,30 +141,68 @@ edgeType deleteMin(minHeapOrList* heap){
 MST Kruskals(LabelAdjMat A){
 	MST kruskal;
 	kruskal.cost = 0;
-	kruskal.eList.lastNdx = -1;
+	kruskal.eList.lastNdx=-1;
 	minHeapOrList heap = createMinHeap(A);
 	int comp[MAX] = {0,1,2,3,4,5};
-	int edgeCount,i;
-	for(edgeCount = 1; edgeCount< MAX;){
+	int edgeNo;
+	int i,j,k;
+	for(edgeNo = 1; edgeNo< MAX;){
 		edgeType min = deleteMin(&heap);
-		int uVal = comp[min.u];
-		int vVal = comp[min.v];
-		if(uVal != vVal){
-			kruskal.eList.edges[++kruskal.eList.lastNdx] = min;
-			kruskal.cost+= min.weight;
+		int X = min.u;
+		int V = min.v;
+		if(comp[X] != comp[V]){
 			for(i=0;i<MAX;i++){
-				if(comp[i] == vVal){
-					comp[i] = uVal;
+				if(comp[i] == comp[V]){
+					comp[i] = comp[X];
 				}
 			}
-			edgeCount++;
+
+			kruskal.eList.edges[++kruskal.eList.lastNdx] = min;
+			kruskal.cost+= min.weight;
+			edgeNo++;
 		}
 	}
 	return kruskal;
 }
 
 MST Prims(LabelAdjMat A, vertex startV) {
-    // To be continued
+    MST prim;
+	prim.cost = 0;
+	prim.eList.lastNdx = -1;
+	minHeapOrList heap;
+	heap.lastNdx = -1;
+	int visited[MAX] = {0};
+
+	visited[startV] = 1;
+	int i,j,x,y;
+	// insert the values of the connected to the starting vertice except infinity
+	for(i = 0; i< MAX;i++){
+		if(A[startV][i] != INF){
+			edgeType temp = {startV,i,A[startV][i]};
+			insertMinHeap(&heap,temp);
+		}
+	}
+
+	int edgeNo = MAX-1;
+	while(prim.eList.lastNdx + 1< edgeNo){
+		edgeType min = deleteMin(&heap);
+
+		if(visited[min.u] != visited[min.v]){
+			prim.eList.edges[++prim.eList.lastNdx] = min;
+			prim.cost+= min.weight;
+
+			int notVisited = (visited[min.u] == 0)? min.u:min.v;
+			visited[notVisited] = 1;
+
+			for(i=0;i<MAX;i++){
+				if(A[notVisited][i] != INF && visited[i] == 0){
+					edgeType temp = {notVisited,i,A[notVisited][i]};
+					insertMinHeap(&heap,temp);
+				}
+			}
+		}
+	}
+	return prim;
 }
 
 void displayAdjMatrix(LabelAdjMat Matrix){
