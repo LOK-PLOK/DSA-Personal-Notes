@@ -7,7 +7,7 @@ typedef struct{
 }MST;
 
 void displayAdjMatrix(labelAdj_M Matrix);
-void displayEdges(labelAdj_M Matrix);
+void displayMST_prim(MST P);
 MST MST_prim(labelAdj_M Matrix, int start);
 
 int main(){
@@ -22,6 +22,7 @@ int main(){
 
     MST prim = MST_prim(G, 0);
     displayAdjMatrix(G);
+    displayMST_prim(prim);
     printf("\nTotal Cost: %d\n\n",prim.cost);
 }
 
@@ -92,16 +93,11 @@ void displayAdjMatrix(labelAdj_M Matrix){
     puts("");
 }
 
-void displayEdges(labelAdj_M Matrix){
-    int totalCost = 0;
-    puts("Edges and Weights:");
-    for(int i = 0; i < MAXV; i++){
-        for(int j = i + 1; j < MAXV; j++){
-            if(Matrix[i][j] != 0 && Matrix[i][j] != INF){
-                printf("Edge (%d, %d) with weight %d\n", i, j, Matrix[i][j]);
-                totalCost += Matrix[i][j];
-            }
-        }
+void displayMST_prim(MST P){
+    int i;
+    printf("Count: %d\n",P.count);
+    printf("Cost: %d\n",P.cost);
+    for(i = 0; i < P.count; i++){
+        printf("%d: (%d,%d) => %d\n",i,P.edges[i].tail,P.edges[i].head,P.edges[i].weight);
     }
-    printf("Total cost of MST: %d\n", totalCost);
 }
