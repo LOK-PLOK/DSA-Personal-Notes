@@ -1,4 +1,4 @@
-#include "strucDef.h"
+#include "../strucDef.h"
 
 void displayAdjMatrix(Adj_M G);
 void dfs(Adj_M G,int curr,Set visited);
